@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
 
     #region - Camera
     public float lookSpeed = 2f;
-    public float lookXLimit = 45f;
+    public float lookXLimit = 80f;
 
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
