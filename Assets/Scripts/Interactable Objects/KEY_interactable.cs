@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class KEY_interactable : MonoBehaviour, IInteractable
 {
-
     public void Interact()
     {
         Debug.Log("You picked a key");
         Destroy(gameObject);
     }
-
 }

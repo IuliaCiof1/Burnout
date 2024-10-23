@@ -13,6 +13,10 @@ public class Controller : MonoBehaviour
     public float jumpPower = 6f;
     public float gravity = 20f;
 
+    public bool isCrouching = false;
+    public float crouchHeight = 1f;
+    public float standHeight = 2f;
+
     public bool canMove = true; // Pentru cinematic-uri pe asta il setam pe false
     #endregion
 
@@ -39,7 +43,8 @@ public class Controller : MonoBehaviour
     {
         HandleMovement();
         HandleRotation();
-     }
+        HandleCrouch();
+    }
 
     void HandleMovement()
     {
@@ -79,6 +84,18 @@ public class Controller : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
+    }
+
+    void HandleCrouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isCrouching = !isCrouching;
+            if (isCrouching)
+                characterController.height = crouchHeight;
+            else
+                characterController.height = standHeight;
         }
     }
     #endregion
