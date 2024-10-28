@@ -1,25 +1,41 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DOOR_Interacting : MonoBehaviour, IInteractable
 {
     private bool isOpen = false;
+    private bool isMoving = false;
+    private Quaternion closedRotation;
+    private Quaternion openRotation;
+    private float rotationSpeed = 5f;
+
+    private void Start()
+    {
+        closedRotation = transform.rotation;
+        openRotation = Quaternion.Euler(0f, 90f, 0f) * closedRotation;
+    }
 
     public void Interact()
     {
-        if (!isOpen)
+        if (!isMoving)
         {
-            Debug.Log("You opened the door.");
-            transform.Rotate(0f, 90f, 0f); 
-            isOpen = true;
-        }
-        else
-        {
-            Debug.Log("You closed the door.");
-            transform.Rotate(0f, -90f, 0f); 
-            isOpen = false;
+            StartCoroutine(RotateDoor());
         }
     }
 
+    private IEnumerator RotateDoor()
+    {
+        isMoving = true;
+        Quaternion targetRotation = isOpen ? closedRotation : openRotation;
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.01f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.rotation = targetRotation;
+        isOpen = !isOpen;
+        isMoving = false;
+    }
 }

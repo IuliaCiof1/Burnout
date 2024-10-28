@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionHandler : MonoBehaviour
 {
     public Transform InteractorSource;
-    public float InteractorRange = 5f;
+    public float InteractorRange = 2f;
 
     private GameObject currentTarget;
     private Material originalMaterial;
@@ -40,7 +40,7 @@ public class InteractionHandler : MonoBehaviour
                     currentTarget = hitObject;
                     Renderer renderer = currentTarget.GetComponent<Renderer>();
 
-                    if (renderer != null)
+                    if (renderer != null && outlineMaterial != null)
                     {
                         originalMaterial = renderer.material;
                         renderer.material = outlineMaterial;

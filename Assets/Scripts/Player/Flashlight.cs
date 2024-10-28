@@ -1,19 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Flashlight : MonoBehaviour
 {
-    #region - Declarations
     public Light flashlight;
     public KeyCode toggleKey = KeyCode.F;
-    //public float batteryLife = 100f; Putem implementa o functionalitate de baterie or something
-    //public float drainRate = 1f;
-    //public float rechargeRate = 5f;
     private bool isOn = false;
-    #endregion
 
-    #region - Methods
     void Start()
     {
         if (flashlight == null)
@@ -22,6 +14,7 @@ public class Flashlight : MonoBehaviour
         }
 
         flashlight.enabled = isOn;
+        enabled = false;
     }
 
     void Update()
@@ -32,5 +25,10 @@ public class Flashlight : MonoBehaviour
             flashlight.enabled = isOn;
         }
     }
-    #endregion
+
+    public void EnableFlashlight()
+    {
+        enabled = true;
+        flashlight.enabled = isOn;
+    }
 }
