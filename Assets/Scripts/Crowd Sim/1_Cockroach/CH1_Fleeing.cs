@@ -11,14 +11,11 @@ public class CH1_Fleeing : State
 
     public override void Update(CH1_Cockroach bug)
     {
-        bug.Move(); 
+        bug.Move();
 
         if (!bug.IsPlayerNearby())
             bug.ChangeState(new CH1_Moving());
     }
 
-    public override void Exit(CH1_Cockroach bug)
-    {
-        // Any cleanup when leaving the fleeing state
-    }
+    public override void Exit(CH1_Cockroach bug) { /* Optional cleanup */ }
 }

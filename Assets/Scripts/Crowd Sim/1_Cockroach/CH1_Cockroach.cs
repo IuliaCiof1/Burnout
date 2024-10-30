@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CH1_Cockroach : MonoBehaviour
@@ -10,9 +12,18 @@ public class CH1_Cockroach : MonoBehaviour
 
     private float changeDirectionTimer;
     private float randomChangeTime;
+    public int flockID;  // ID for the specific flock/group
+
+    public float separationDistance = 10.0f;
+    public float alignmentDistance = 10.0f;
+    public float cohesionDistance = 10.0f; 
+    public float maxFlockSpeed = 2.0f;
+
+    private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
 
     void Start()
     {
+        allCockroaches.Add(this);
         ChangeState(new CH1_Moving());
     }
 
@@ -20,10 +31,16 @@ public class CH1_Cockroach : MonoBehaviour
     {
         currentState?.Update(this);
         changeDirectionTimer -= Time.deltaTime;
+
         if (changeDirectionTimer <= 0)
         {
             SetRandomDirection();
         }
+    }
+
+    void OnDestroy()
+    {
+        allCockroaches.Remove(this);
     }
 
     public void ChangeState(State newState)
@@ -41,14 +58,18 @@ public class CH1_Cockroach : MonoBehaviour
     public bool IsPlayerNearby()
     {
         GameObject player = GameObject.FindWithTag("Player");
-        return player != null && Vector3.Distance(transform.position, player.transform.position) < 1f;
+        bool isNearby =  player != null && Vector3.Distance(transform.position, player.transform.position) < 1f;
+
+        if (isNearby)
+            Debug.Log("You picked up a Flashlight");
+
+        return isNearby;
     }
 
     public void SetRandomDirection()
     {
-        direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-
-        randomChangeTime = Random.Range(1f, 3f);
+        direction = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+        randomChangeTime = UnityEngine.Random.Range(1f, 3f);
         changeDirectionTimer = randomChangeTime;
     }
 
@@ -58,6 +79,52 @@ public class CH1_Cockroach : MonoBehaviour
         if (player != null)
         {
             direction = (transform.position - player.transform.position).normalized;
+        }
+    }
+    public void ApplyFlockingBehavior()
+    {
+        Vector3 separation = Vector3.zero;
+        Vector3 alignment = Vector3.zero;
+        Vector3 cohesion = Vector3.zero;
+
+        int separationCount = 0;
+        int alignmentCount = 0;
+        int cohesionCount = 0;
+
+        foreach (var cockroach in allCockroaches)
+        {
+            if (cockroach == this || cockroach.flockID != this.flockID) continue;
+
+            float distance = Vector3.Distance(transform.position, cockroach.transform.position);
+
+            if (distance < separationDistance)
+            {
+                separation += (transform.position - cockroach.transform.position).normalized / distance;
+                separationCount++;
+            }
+
+            if (distance < alignmentDistance)
+            {
+                alignment += cockroach.direction;
+                alignmentCount++;
+            }
+
+            if (distance < cohesionDistance)
+            {
+                cohesion += cockroach.transform.position;
+                cohesionCount++;
+            }
+        }
+
+        if (separationCount > 0) separation /= separationCount;
+        if (alignmentCount > 0) alignment /= alignmentCount;
+        if (cohesionCount > 0) cohesion = (cohesion / cohesionCount - transform.position).normalized;
+
+        Vector3 flockDirection = separation + alignment + cohesion;
+        if (flockDirection != Vector3.zero)
+        {
+            direction = Vector3.Lerp(direction, flockDirection.normalized, 0.1f);
+            speed = Mathf.Lerp(speed, maxFlockSpeed, 0.05f);
         }
     }
 }
