@@ -12,7 +12,7 @@ public class CH1_Moving : State
 
     public override void Update(CH1_Cockroach bug)
     {
-        bug.ApplyFlockingBehavior(); // Apply flocking behavior for realism
+        bug.ApplyFlockingBehavior();
         bug.Move();
 
         if (bug.IsPlayerNearby())
