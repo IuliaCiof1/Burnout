@@ -19,7 +19,10 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
         if(Vector3.Distance(Player.transform.position, this.transform.GetChild(0).GetChild(0).Find("Plane_16").transform.position) < 1f)
         {
             PlayerInside = true;
-            
+        }
+        else
+        {
+            PlayerInside = false;
         }
     }
 
@@ -34,11 +37,14 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
         yield return new WaitForSecondsRealtime(8f);
         gameObject.GetComponent<BoxCollider>().enabled = false;
         this.gameObject.GetComponent<Animator>().SetFloat("AnimSpeed", 0f);
-        yield return new WaitWhile(() => PlayerInside == true);
+        while(PlayerInside == false)
+        {
+            yield return null;
+        }
+        Player.transform.parent = this.gameObject.transform;
         this.gameObject.GetComponent<Animator>().SetFloat("AnimSpeed", 1f);
-        GameObject.Find("PlayerManager").transform.parent = this.gameObject.transform;
-        yield return new WaitForSecondsRealtime(2f);
-        this.transform.position += new Vector3(0, -3.2f, 0);
-
+        yield return new WaitForSecondsRealtime(4f);
+        this.transform.position += new Vector3(0, -3f, 0);
+        Player.transform.parent = GameObject.Find("==== Player ====").transform;
     }
 }
