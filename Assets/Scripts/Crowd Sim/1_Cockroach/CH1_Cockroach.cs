@@ -57,12 +57,8 @@ public class CH1_Cockroach : MonoBehaviour
 
     public bool IsPlayerNearby()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        bool isNearby =  player != null && Vector3.Distance(transform.position, player.transform.position) < 1f;
-
-        if (isNearby)
-            Debug.Log("You picked up a Flashlight");
-
+        GameObject Player = GameObject.FindWithTag("Player");
+        bool isNearby = Vector3.Distance(transform.position, Player.transform.position) < 3f;
         return isNearby;
     }
 
