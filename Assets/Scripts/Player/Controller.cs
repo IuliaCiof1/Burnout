@@ -98,5 +98,12 @@ public class Controller : MonoBehaviour
                 characterController.height = standHeight;
         }
     }
+
+    public void SetMovement(bool state)
+    {
+        canMove = state;
+        Cursor.lockState = state ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !state;
+    }
     #endregion
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionHandler : MonoBehaviour
 {
     public Transform InteractorSource;
-    public float InteractorRange = 2f;
+    public float InteractorRange = 5f;
 
     private GameObject currentTarget;
     private Material originalMaterial;
@@ -21,7 +21,16 @@ public class InteractionHandler : MonoBehaviour
                 interactObj.Interact();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (currentTarget != null && currentTarget.TryGetComponent(out IInspectable inspecObj))
+            {
+                inspecObj.Inspect();
+            }
+        }
     }
+
 
     private void HandleHighlighting()
     {
@@ -31,25 +40,18 @@ public class InteractionHandler : MonoBehaviour
         {
             GameObject hitObject = hitInfo.collider.gameObject;
 
-            if (hitObject.TryGetComponent(out IInteractable interactable))
-            {
-                if (hitObject != currentTarget)
-                {
-                    ClearOutline();
-
-                    currentTarget = hitObject;
-                    Renderer renderer = currentTarget.GetComponent<Renderer>();
-
-                    if (renderer != null && outlineMaterial != null)
-                    {
-                        originalMaterial = renderer.material;
-                        renderer.material = outlineMaterial;
-                    }
-                }
-            }
-            else
+            if (hitObject != currentTarget)
             {
                 ClearOutline();
+
+                currentTarget = hitObject;
+                Renderer renderer = currentTarget.GetComponent<Renderer>();
+
+                if (renderer != null && outlineMaterial != null)
+                {
+                    originalMaterial = renderer.material;
+                    renderer.material = outlineMaterial;
+                }
             }
         }
         else
@@ -57,6 +59,41 @@ public class InteractionHandler : MonoBehaviour
             ClearOutline();
         }
     }
+
+    //private void HandleHighlighting()
+    //{
+    //    Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);
+
+    //    if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractorRange))
+    //    {
+    //        GameObject hitObject = hitInfo.collider.gameObject;
+
+    //        if (hitObject.TryGetComponent(out IInteractable interactable))
+    //        {
+    //            if (hitObject != currentTarget)
+    //            {
+    //                ClearOutline();
+
+    //                currentTarget = hitObject;
+    //                Renderer renderer = currentTarget.GetComponent<Renderer>();
+
+    //                if (renderer != null && outlineMaterial != null)
+    //                {
+    //                    originalMaterial = renderer.material;
+    //                    renderer.material = outlineMaterial;
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ClearOutline();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        ClearOutline();
+    //    }
+    //}
 
     private void ClearOutline()
     {
@@ -71,4 +108,5 @@ public class InteractionHandler : MonoBehaviour
             currentTarget = null;
         }
     }
+
 }
