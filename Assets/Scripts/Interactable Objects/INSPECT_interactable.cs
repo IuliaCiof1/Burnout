@@ -41,7 +41,20 @@ public class INSPECT_interactable : MonoBehaviour, IInspectable
             objectCollider.enabled = false;
         }
 
-        float inspectionDistance = 0.5f; // TO DO make inspectionDistance change based on object size
+        float objectSize = 1f;
+        Renderer renderer = GetComponent<Renderer>();
+
+        if (renderer != null)
+        {
+            objectSize = renderer.bounds.extents.magnitude;
+        }
+        else if (objectCollider != null)
+        {
+            objectSize = objectCollider.bounds.extents.magnitude;
+        }
+
+        float inspectionDistance = Mathf.Max(objectSize * 3.00f, 0.5f);
+
         Vector3 inspectionPosition = mainCamera.transform.position + mainCamera.transform.forward * inspectionDistance;
 
         transform.position = inspectionPosition;
