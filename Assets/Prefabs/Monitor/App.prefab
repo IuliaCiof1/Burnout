@@ -453,6 +453,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6223410994398920475}
     m_Modifications:
+    - target: {fileID: 1954972474262637739, guid: 13bb9d158017e7e4bb61969f2ab6c580,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0076007918
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532374434395538029, guid: 13bb9d158017e7e4bb61969f2ab6c580,
+        type: 3}
+      propertyPath: m_Name
+      value: CloseButton
+      objectReference: {fileID: 0}
     - target: {fileID: 4062750064476361515, guid: 13bb9d158017e7e4bb61969f2ab6c580,
         type: 3}
       propertyPath: m_Pivot.x

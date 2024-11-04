@@ -13,9 +13,15 @@ public class DisplayMailContent : MonoBehaviour
     {
         foreach(Transform mail in transform)
         {
-            Button mailButton =  mail.GetComponent<Button>();
+            Button mailButton =  mail.Find("Sender").GetComponent<Button>();
+           
+
 
             mailButton.onClick.AddListener(() => { DisplayMail(mail.gameObject); });
+
+            GameObject unreadIcon = mail.Find("UnreadIcon").gameObject;
+            if (unreadIcon != null);
+                mailButton.onClick.AddListener(() => {ReadMail(mail.gameObject, unreadIcon); });
         }
     }
 
@@ -30,4 +36,11 @@ public class DisplayMailContent : MonoBehaviour
         mail.transform.GetChild(1).gameObject.SetActive(true);
 
     }
+
+
+    public void ReadMail(GameObject mail, GameObject unreadIcon)
+    {
+        unreadIcon.SetActive(false);
+    }
+
 }

@@ -12,6 +12,7 @@ public class AppsManager : MonoBehaviour
     [ReadOnly] [SerializeField] private string windowObjectName = "Window";
     [ReadOnly] [SerializeField] private string desktopIconObjectName = "Desktop Icon";
     [ReadOnly] [SerializeField] private string barTabObjectName = "Bar Tab";
+    [ReadOnly] [SerializeField] private string closeButtonName = "CloseButton";
 
 
     // Start is called before the first frame update
@@ -26,10 +27,14 @@ public class AppsManager : MonoBehaviour
             icon = app.transform.Find(desktopIconObjectName).gameObject;
             barTab = app.transform.Find(barTabObjectName).gameObject;
 
+           
+
             barTab.transform.SetParent(bottomBar.transform);
 
             Button iconButton = icon.GetComponent<Button>();
             iconButton.onClick.AddListener(() => { OpenApp(app, window, barTab); });
+
+            
         }
     }
 
@@ -53,11 +58,21 @@ public class AppsManager : MonoBehaviour
      
 
         app.transform.SetAsLastSibling();
+
+
+        //Set close app listener
+        GameObject closeButton_;
+        print(app.name);
+        closeButton_ = window.transform.Find("TopBar").Find(closeButtonName).gameObject;
+        Button closeButton = closeButton_.GetComponent<Button>();
+        closeButton.onClick.AddListener(() => { CloseApp(window, barTab); });
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    void CloseApp(GameObject window, GameObject barTab)
     {
-        
+        window.SetActive(false);
+        barTab.SetActive(false);
     }
+ 
 }
