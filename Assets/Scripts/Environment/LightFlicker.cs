@@ -11,20 +11,13 @@ public class LightFlicker : MonoBehaviour
 
     private Light SelfLightComponent;
 
-    // Start is called before the first frame update
-    void Start()
+     void Start()
     {
         SelfLightComponent = gameObject.GetComponent<Light>();
         StartCoroutine(Flicker());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private IEnumerator Flicker()
+    public IEnumerator Flicker()
     {
         WaitForSecondsRealtime CheckInterval = new WaitForSecondsRealtime(TurnOffRollInterval);
         while (true)
@@ -40,5 +33,16 @@ public class LightFlicker : MonoBehaviour
             }
             yield return CheckInterval;
         }
+    }
+
+    public void StopLights()
+    {
+        StopAllCoroutines();
+        SelfLightComponent.enabled = true;
+    }
+    public void StartLights()
+    {
+        StartCoroutine(Flicker());
+        SelfLightComponent.enabled = false;
     }
 }

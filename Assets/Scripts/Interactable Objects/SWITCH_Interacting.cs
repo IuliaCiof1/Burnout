@@ -4,6 +4,7 @@ using UnityEngine;
 public class SWITCH_Interacting : MonoBehaviour, IInteractable
 {
     private Light[] roomLights;
+    private LightFlicker flicker;
 
     private void Start()
     {
@@ -19,6 +20,15 @@ public class SWITCH_Interacting : MonoBehaviour, IInteractable
     {
         foreach (Light light in roomLights)
         {
+            if (light.TryGetComponent<LightFlicker>(out flicker))
+            {
+                if (flicker.enabled)
+                    flicker.StopLights();
+                else
+                    flicker.StartLights();
+                flicker.enabled = !flicker.enabled;
+            }
+
             light.enabled = !light.enabled;
         }
     }
