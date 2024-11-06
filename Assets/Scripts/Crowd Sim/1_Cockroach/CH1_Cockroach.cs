@@ -7,7 +7,7 @@ using UnityEngine;
 public class CH1_Cockroach : MonoBehaviour
 {
     private State currentState;
-    private Vector3 direction;
+    public Vector3 direction;
     private float speed = 2.0f;
 
     private float changeDirectionTimer;
@@ -16,7 +16,7 @@ public class CH1_Cockroach : MonoBehaviour
 
     public float separationDistance = 10.0f;
     public float alignmentDistance = 10.0f;
-    public float cohesionDistance = 10.0f; 
+    public float cohesionDistance = 10.0f;
     public float maxFlockSpeed = 2.0f;
 
     private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
@@ -29,6 +29,8 @@ public class CH1_Cockroach : MonoBehaviour
 
     void Update()
     {
+        if (currentState is CH1_Dead) return;
+
         currentState?.Update(this);
         changeDirectionTimer -= Time.deltaTime;
 
@@ -36,11 +38,24 @@ public class CH1_Cockroach : MonoBehaviour
         {
             SetRandomDirection();
         }
+
+        RotateTowardsDirection();
     }
+
 
     void OnDestroy()
     {
         allCockroaches.Remove(this);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ChangeState(new CH1_Dead());
+        }
+
+ 
     }
 
     public void ChangeState(State newState)
@@ -75,8 +90,10 @@ public class CH1_Cockroach : MonoBehaviour
         if (player != null)
         {
             direction = (transform.position - player.transform.position).normalized;
+            Debug.Log("You are too close");
         }
     }
+
     public void ApplyFlockingBehavior()
     {
         Vector3 separation = Vector3.zero;
@@ -121,6 +138,39 @@ public class CH1_Cockroach : MonoBehaviour
         {
             direction = Vector3.Lerp(direction, flockDirection.normalized, 0.1f);
             speed = Mathf.Lerp(speed, maxFlockSpeed, 0.05f);
+        }
+    }
+
+    public void SetResting(bool isResting)
+    {
+        if (isResting)
+        {
+            speed = 0f;
+            //idle animation!!!
+        }
+        else
+        {
+            speed = 2.0f;
+        }
+    }
+
+    public void SetDeadVisual()
+    {
+        //Animatiie de morte
+        Debug.Log("You killed me");
+    }
+
+    public void DisableMovement()
+    {
+        speed = 0f;
+    }
+
+    public void RotateTowardsDirection()
+    {
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
 }

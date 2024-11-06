@@ -16,7 +16,13 @@ public class CH1_Moving : State
         bug.Move();
 
         if (bug.IsPlayerNearby())
+        {
             bug.ChangeState(new CH1_Fleeing());
+        }
+        else if (UnityEngine.Random.value < 0.003f)
+        {
+            bug.ChangeState(new CH1_Resting());
+        }
     }
 
     public override void Exit(CH1_Cockroach bug) { /* Optional cleanup */ }
