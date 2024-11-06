@@ -8,8 +8,8 @@ public class Controller : MonoBehaviour
     #region - Declarations
     public Camera playerCamera;
     #region - Movement
-    public float walkSpeed = 4f;
-    public float runSpeed = 6f;
+    public float walkSpeed = 2f;
+    public float runSpeed = 3f;
     public float jumpPower = 6f;
     public float gravity = 20f;
 
@@ -41,6 +41,7 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         HandleMovement();
         HandleRotation();
         HandleCrouch();
