@@ -18,6 +18,8 @@ public class MonitorCursor : MonoBehaviour
     void Update()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+
         // Get the mouse position in screen space
         Vector2 mousePos = Input.mousePosition;
 

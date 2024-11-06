@@ -13,49 +13,67 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     [SerializeField] Controller playerController;
     Camera camera;
 
+    Vector3 oldPlayerPos;
+    //Vector3 oldPlayerPos;
+    float fieldOfView;
+
     private void Start()
     {
         camera = Camera.main;
+        fieldOfView = camera.fieldOfView;
+        
     }
 
     public void Interact()
     {
-        //lock camera potision and rotation
-        LockCamera();
-
-        //lock character movement
+        SitAtComputer();
     }
 
-    void LockCamera()
+
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GetUp();
+        }
+    }
+
+    void SitAtComputer()
+    {
+        oldPlayerPos = player.transform.position;
         playerController.enabled = false;
 
         Sequence sequence = DOTween.Sequence();
-        
-        sequence.Append(camera.transform.DOLocalRotateQuaternion(Quaternion.identity, duration));
-        sequence.Join(player.transform.DOLookAt(rotateToSitPoint.position, duration).SetRelative(false));
-        sequence.Append(player.transform.DOMove(monitorCamera.position, duration).SetRelative(false));
-        //sequence.Join(camera.transform.DORotateQuaternion(Quaternion.identity, duration));
-        //player.transform.DOLookAt(new Vector3(player.transform.position.x, lookAtPoint.position.y, player.transform.position.z), duration);
-       sequence.Join(player.transform.DOLookAt(lookAtPoint.position, duration).SetRelative(false));
-        //Sequence sequence = DOTween.Sequence();
 
-        ////sequence.Append(player.transform.DOMove(monitorCamera.position, duration));
-        //sequence.Append(player.transform.DOLookAt(lookAtPoint.position, duration));
-        ////sequence.Append(player.transform.DORotateQuaternion(monitorCamera.transform.rotation, duration));
-        sequence.Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration).SetRelative(false));
+        // Move the player to the sit position, then rotate the player to face the monitor
+        sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration))
+            .Append(player.transform.DOMove(monitorCamera.position, duration))
+                // After the player is positioned, rotate the camera to look at the monitor
+                .Append(camera.transform.DOLookAt(lookAtPoint.position, duration))
+                .Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration));
 
-
-        Cursor.lockState = CursorLockMode.None;
-
-        ////player.transform.DOMove(monitorCamera.position, duration);
-        ////player.transform.DOLookAt(lookAtPoint.position, duration);
-        ////print(player.transform.position);
-        ////camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration);
     }
 
-    void LockCharacter()
+    void GetUp()
     {
+        playerController.enabled = true;
 
+        Sequence sequence = DOTween.Sequence();
+        camera.transform.SetParent(null, true);
+        sequence
+           .Append(camera.DOFieldOfView(fieldOfView, duration))
+
+           // Step 2: Move the player to the sit position and rotate to face the monitor
+           .Append(player.transform.DOMove(oldPlayerPos, duration))
+           .Join(player.transform.DOLookAt(rotateToSitPoint.position, duration))
+            .OnComplete(() =>
+            {
+                camera.transform.SetParent(player.transform, true);
+               
+            }); ;
+
+        //camera.fieldOfView = fieldOfView;
     }
+
+   
 }
