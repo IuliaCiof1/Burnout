@@ -56,22 +56,30 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void GetUp()
     {
+        // Disable player control initially
         playerController.enabled = true;
 
+        // Start a DOTween sequence
         Sequence sequence = DOTween.Sequence();
+
+        // Step 1: Temporarily unparent camera to change its field of view independently
         camera.transform.SetParent(null, true);
-        sequence
-           .Append(camera.DOFieldOfView(fieldOfView, duration))
 
-           // Step 2: Move the player to the sit position and rotate to face the monitor
-           .Append(player.transform.DOMove(oldPlayerPos, duration))
-           .Join(player.transform.DOLookAt(rotateToSitPoint.position, duration))
-            .OnComplete(() =>
-            {
-                camera.transform.SetParent(player.transform, true);
+        // Step 2: Apply field of view change while the camera is detached
+        sequence.Append(camera.DOFieldOfView(fieldOfView, duration))
+
+                // Step 3: Reparent the camera to the player so it moves along with the player
+                .AppendCallback(() => camera.transform.SetParent(player.transform, true))
+
+                // Step 4: Move the player to the sit position and rotate to face the monitor
+                .Append(player.transform.DOMove(oldPlayerPos, duration))
                
-            }); ;
 
+                // Step 5: Re-enable player control after the sequence completes
+                .Append(player.transform.DOLocalRotateQuaternion(Quaternion.identity, duration));
+
+        // Unlock the cursor for interaction
+        Cursor.lockState = CursorLockMode.None;
         //camera.fieldOfView = fieldOfView;
     }
 
