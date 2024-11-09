@@ -6,7 +6,9 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     #region - Declarations
+
     public Camera playerCamera;
+
     #region - Movement
     public float walkSpeed = 2f;
     public float runSpeed = 3f;
@@ -35,13 +37,11 @@ public class Controller : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetMovement(true);
     }
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         HandleMovement();
         HandleRotation();
         HandleCrouch();
@@ -103,8 +103,16 @@ public class Controller : MonoBehaviour
     public void SetMovement(bool state)
     {
         canMove = state;
-        Cursor.lockState = state ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !state;
+        if (state)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
     #endregion
 }

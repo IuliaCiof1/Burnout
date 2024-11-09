@@ -5,19 +5,20 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     private bool isPaused = false;
     public Controller player;
+    public MONITOR_Interactable monitor;
+    private void Start()
+    {
+        pauseMenuUI.SetActive(false);
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && player.canMove)
+        if (!monitor.isSitting) // TO SOLVE
         {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
+            if (Input.GetKeyDown(KeyCode.Escape) && player.canMove)
                 Pause();
-            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+                Resume();
         }
     }
 
@@ -27,6 +28,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         player.canMove = true;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Pause()
@@ -35,6 +39,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         player.canMove = false;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void QuitGame()

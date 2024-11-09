@@ -17,7 +17,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     //Vector3 oldPlayerPos;
     float fieldOfView;
 
-    bool isSitting;
+    public bool isSitting;
 
     private void Start()
     {
