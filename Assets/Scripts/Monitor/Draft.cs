@@ -10,7 +10,10 @@ public class Draft : MonoBehaviour
     [TextArea(15, 20)]
     [SerializeField] private string textToWrite;
     [SerializeField] TMP_Text textArea;
+    [SerializeField] private GameObject draftMail;
 
+    [SerializeField] GameObject spookyMail;
+    [SerializeField] float spookyMailDelay;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +24,7 @@ public class Draft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (textArea.gameObject.activeInHierarchy && Input.anyKeyDown)
         {
             //ignore mouse clicks
             if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse1))
@@ -31,10 +34,31 @@ public class Draft : MonoBehaviour
             else
             {
                 if (index < textToWrite.Length - 1)
+                {
                     textArea.text += textToWrite[index];
-                index++;
+                    index++;
+                }
             }
         }
     }
 
+
+    public void SendDraft()
+    {
+        
+        if (index == textToWrite.Length - 1)
+        {
+            draftMail.SetActive(false);
+
+            StartCoroutine(Delay());
+        }
+        else
+            print("I need to finish writing the mail first");
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(spookyMailDelay);
+        spookyMail.SetActive(true);
+    }
 }

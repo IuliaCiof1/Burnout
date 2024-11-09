@@ -17,8 +17,11 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     //Vector3 oldPlayerPos;
     float fieldOfView;
 
+    bool isSitting;
+
     private void Start()
     {
+        
         camera = Camera.main;
         fieldOfView = camera.fieldOfView;
         
@@ -32,14 +35,20 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+
+        if (isSitting)
         {
-            GetUp();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GetUp();
+            }
         }
     }
 
     void SitAtComputer()
     {
+        isSitting = true;
+
         oldPlayerPos = player.transform.position;
         playerController.enabled = false;
 
@@ -56,6 +65,8 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void GetUp()
     {
+        isSitting = false;
+
         // Disable player control initially
         playerController.enabled = true;
 
@@ -63,13 +74,13 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         Sequence sequence = DOTween.Sequence();
 
         // Step 1: Temporarily unparent camera to change its field of view independently
-        camera.transform.SetParent(null, true);
+        //camera.transform.SetParent(null, true);
 
         // Step 2: Apply field of view change while the camera is detached
         sequence.Append(camera.DOFieldOfView(fieldOfView, duration))
 
                 // Step 3: Reparent the camera to the player so it moves along with the player
-                .AppendCallback(() => camera.transform.SetParent(player.transform, true))
+                //.AppendCallback(() => camera.transform.SetParent(player.transform, true))
 
                 // Step 4: Move the player to the sit position and rotate to face the monitor
                 .Append(player.transform.DOMove(oldPlayerPos, duration))

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayMailContent : MonoBehaviour
 {
-    [SerializeField] private Transform currentMail;
+    [SerializeField] private Transform contentMailPosition;
 
     Vector3 iniPosition;
 
@@ -19,26 +19,36 @@ public class DisplayMailContent : MonoBehaviour
 
             mailButton.onClick.AddListener(() => { DisplayMail(mail.gameObject); });
 
-            GameObject unreadIcon = mail.Find("UnreadIcon").gameObject;
-            if (unreadIcon != null);
-                mailButton.onClick.AddListener(() => {ReadMail(mail.gameObject, unreadIcon); });
+            Transform unreadIcon = mail.Find("UnreadIcon");
+            if (unreadIcon != null)
+            {
+                print("has icon");
+                mailButton.onClick.AddListener(() => { ReadMail(mail.gameObject, unreadIcon.gameObject); });
+
+            }
+            else
+            {
+                print("no icon");
+            }
         }
     }
 
+    //sets the MailContent object of all the other unselected mails, on not active. Also corectly repositions the mailContent
     public void DisplayMail(GameObject mail)
     {
-        print(mail.name);
+        
         foreach (Transform inactiveMail in transform)
         {
             inactiveMail.transform.GetChild(1).gameObject.SetActive(false);
         }
 
-        mail.transform.GetChild(1).gameObject.SetActive(true);
-
+        GameObject mailContent = mail.transform.GetChild(1).gameObject;
+        mailContent.SetActive(true);
+        mailContent.transform.position = contentMailPosition.transform.position;
     }
 
 
-    public void ReadMail(GameObject mail, GameObject unreadIcon)
+    public void ReadMail(GameObject mail, GameObject  unreadIcon)
     {
         unreadIcon.SetActive(false);
     }
