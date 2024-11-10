@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 8ee51684185d71540a771e02f0e8d69e
+guid: e8302ff39f9f42c4bb4fe56814797fad
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: giant_cockroach
-    second: {fileID: 2100000, guid: 2995cbd0b2c8f504c9107e3ba786440c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
