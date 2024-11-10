@@ -1,0 +1,7 @@
+To add new objectives follow these steps:
+
+1. create a new event in ObjectiveEvents
+2. create a new objective script that inherits from Objective class. Example: Obj_SendMail.cs
+3. place the objective logic there and make sure to subscribe and unsubscribe to Complete event with the events you created
+4. add a new scriptable object (Objective -> the class you created)
+5. add the scriptable object to the ObjectiveManager list

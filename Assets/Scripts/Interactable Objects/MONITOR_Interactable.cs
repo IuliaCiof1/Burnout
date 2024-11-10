@@ -19,6 +19,8 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     public bool isSitting;
 
+    [SerializeField] private Phone phone;
+
     private void Start()
     {
         
@@ -38,6 +40,8 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
         if (isSitting)
         {
+
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GetUp();
@@ -47,13 +51,15 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void SitAtComputer()
     {
+        phone.HidePhone();
+
         isSitting = true;
 
         oldPlayerPos = player.transform.position;
         playerController.enabled = false;
 
         Sequence sequence = DOTween.Sequence();
-
+        
         // Move the player to the sit position, then rotate the player to face the monitor
         sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration))
             .Append(player.transform.DOMove(monitorCamera.position, duration))
@@ -92,6 +98,8 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         // Unlock the cursor for interaction
         Cursor.lockState = CursorLockMode.None;
         //camera.fieldOfView = fieldOfView;
+
+        phone.ShowPhone();
     }
 
    

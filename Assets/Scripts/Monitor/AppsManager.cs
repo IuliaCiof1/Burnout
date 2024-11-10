@@ -22,7 +22,6 @@ public class AppsManager : MonoBehaviour
         {
             GameObject window, icon, barTab;
 
-            print(app.name);
             window = app.transform.Find(windowObjectName).gameObject;
             icon = app.transform.Find(desktopIconObjectName).gameObject;
             barTab = app.transform.Find(barTabObjectName).gameObject;
@@ -40,7 +39,7 @@ public class AppsManager : MonoBehaviour
 
     void OpenApp(GameObject app, GameObject window, GameObject barTab)
     {
-        print(app);
+       
 
         barTab.SetActive(true);
         window.SetActive(true);

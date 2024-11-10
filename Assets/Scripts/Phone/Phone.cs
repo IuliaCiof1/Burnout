@@ -19,4 +19,14 @@ public class Phone : MonoBehaviour
         transform.position = Camera.main.ViewportToWorldPoint(positionOffset);
         transform.rotation *= Quaternion.Euler(rotationOffset);
     }
+
+    public void HidePhone()
+    {
+        positionOffset += new Vector3(0, -3, 0);
+    }
+
+    public void ShowPhone()
+    {
+        positionOffset += new Vector3(0, +3, 0);
+    }
 }

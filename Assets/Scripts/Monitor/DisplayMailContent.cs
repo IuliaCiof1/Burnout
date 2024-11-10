@@ -22,14 +22,11 @@ public class DisplayMailContent : MonoBehaviour
             Transform unreadIcon = mail.Find("UnreadIcon");
             if (unreadIcon != null)
             {
-                print("has icon");
+               
                 mailButton.onClick.AddListener(() => { ReadMail(mail.gameObject, unreadIcon.gameObject); });
 
             }
-            else
-            {
-                print("no icon");
-            }
+           
         }
     }
 

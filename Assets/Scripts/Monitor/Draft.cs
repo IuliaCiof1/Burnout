@@ -48,6 +48,7 @@ public class Draft : MonoBehaviour
         
         if (index == textToWrite.Length - 1)
         {
+            ObjectiveEvents.SendEmail();
             draftMail.SetActive(false);
 
             StartCoroutine(Delay());
