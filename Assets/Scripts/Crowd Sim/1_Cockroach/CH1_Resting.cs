@@ -15,6 +15,8 @@ public class CH1_Resting : State
 
     public override void Update(CH1_Cockroach bug)
     {
+        bug.SetIdleVisual();
+
         restTimer -= Time.deltaTime;
         if (restTimer <= 0)
         {

@@ -13,13 +13,14 @@ public class CH1_Moving : State
     public override void Update(CH1_Cockroach bug)
     {
         bug.ApplyFlockingBehavior();
+        bug.SetMovingVisual();
         bug.Move();
 
         if (bug.IsPlayerNearby())
         {
             bug.ChangeState(new CH1_Fleeing());
         }
-        else if (UnityEngine.Random.value < 0.003f)
+        else if (UnityEngine.Random.value < 0.01f)
         {
             bug.ChangeState(new CH1_Resting());
         }

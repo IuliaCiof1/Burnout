@@ -8,7 +8,10 @@ public class CH1_Cockroach : MonoBehaviour
 {
     private State currentState;
     public Vector3 direction;
-    private float speed = 2.0f;
+    private float speed = 0.4f;
+
+    public Animator CS1_Anim;
+
 
     private float changeDirectionTimer;
     private float randomChangeTime;
@@ -17,7 +20,7 @@ public class CH1_Cockroach : MonoBehaviour
     public float separationDistance = 10.0f;
     public float alignmentDistance = 10.0f;
     public float cohesionDistance = 10.0f;
-    public float maxFlockSpeed = 2.0f;
+    public float maxFlockSpeed = 0.4f;
 
     private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
 
@@ -54,8 +57,6 @@ public class CH1_Cockroach : MonoBehaviour
         {
             ChangeState(new CH1_Dead());
         }
-
- 
     }
 
     public void ChangeState(State newState)
@@ -150,14 +151,8 @@ public class CH1_Cockroach : MonoBehaviour
         }
         else
         {
-            speed = 2.0f;
+            speed = 0.4f;
         }
-    }
-
-    public void SetDeadVisual()
-    {
-        //Animatiie de morte
-        Debug.Log("You killed me");
     }
 
     public void DisableMovement()
@@ -169,8 +164,30 @@ public class CH1_Cockroach : MonoBehaviour
     {
         if (direction != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(-direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
+
+    #region - Animations
+    public void SetDeadVisual()
+    {
+        CS1_Anim.SetBool("anim_death", true);
+    }
+
+    public void SetFleeingVisual()
+    {
+        CS1_Anim.SetTrigger("anim_Fleeing");
+    }
+
+    public void SetMovingVisual() 
+    {
+        CS1_Anim.SetTrigger("anim_Moving");
+    }
+
+    public void SetIdleVisual()
+    {
+        CS1_Anim.SetTrigger("anim_Idle");
+    }
+    #endregion
 }
