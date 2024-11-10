@@ -3,7 +3,12 @@ guid: e810c9dd3fcb0ea4895c95762f1c8716
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_StreetLamp
+    second: {fileID: 2100000, guid: 21f331bbff272c147b57457e2395136a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
