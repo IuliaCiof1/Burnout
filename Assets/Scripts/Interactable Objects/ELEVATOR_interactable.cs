@@ -8,11 +8,19 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
     public Animator doorAnimator;
     private bool isMoving = false;
     private GameObject player;
+    private bool isPlyerInside = false;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            isPlyerInside = true;
+    }
+
 
     public void Interact()
     {
@@ -24,9 +32,10 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
 
     private IEnumerator OpenDoorsThenMove()
     {
+        if (!isPlyerInside)
         isMoving = true;
         //check for player leaving
-        doorAnimator.SetBool("hasStarted",true);
+        doorAnimator.SetBool("hasStarted", true);
         yield return new WaitForSeconds(6f);
         yield return StartCoroutine(MoveToTarget());
         yield return new WaitForSeconds(2f);
