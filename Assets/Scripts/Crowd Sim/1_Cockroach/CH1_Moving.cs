@@ -20,7 +20,7 @@ public class CH1_Moving : State
         {
             bug.ChangeState(new CH1_Fleeing());
         }
-        else if (UnityEngine.Random.value < 0.01f)
+        else if (UnityEngine.Random.value < 0.02f)
         {
             bug.ChangeState(new CH1_Resting());
         }

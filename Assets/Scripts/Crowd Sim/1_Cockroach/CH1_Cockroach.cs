@@ -91,7 +91,6 @@ public class CH1_Cockroach : MonoBehaviour
         if (player != null)
         {
             direction = (transform.position - player.transform.position).normalized;
-            Debug.Log("You are too close");
         }
     }
 
