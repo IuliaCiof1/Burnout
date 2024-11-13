@@ -16,7 +16,7 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-    public void HandleTrigger(int triggerID)
+    public void HandleTrigger(int triggerID, string description, AudioClip Sound)
     {
 
         switch (triggerID)
@@ -29,6 +29,11 @@ public class ActionManager : MonoBehaviour
                 break;
             case 3:
                 PlaySoundEffect();
+                break;
+            case 4:
+                break;
+            case 5:
+                PlayDoorAudio();
                 break;
             default:
                 Debug.LogWarning("Unhandled triggerID: " + triggerID);
@@ -43,11 +48,16 @@ public class ActionManager : MonoBehaviour
 
     private void ShowScaryObject()
     {
-        Debug.Log("Showing scary object...");
+        Debug.Log("Showing scary  ...");
     }
 
     private void PlaySoundEffect()
     {
         Debug.Log("Playing sound effect...");
+    }
+
+    private void PlayDoorAudio()
+    {
+        Debug.Log("ABC");
     }
 }

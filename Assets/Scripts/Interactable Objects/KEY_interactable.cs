@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class KEY_interactable : MonoBehaviour, IInteractable
 {
+    public int KeyId;
     public void Interact()
     {
         Debug.Log("You picked a key");

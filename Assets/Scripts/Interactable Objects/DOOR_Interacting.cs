@@ -8,6 +8,7 @@ public class DOOR_Interacting : MonoBehaviour, IInteractable
     private Quaternion closedRotation;
     private Quaternion openRotation;
     private float rotationSpeed = 5f;
+    public AudioClip audio;
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class DOOR_Interacting : MonoBehaviour, IInteractable
 
     private IEnumerator RotateDoor()
     {
+        ActionManager.Instance.HandleTrigger(5, "", audio);
+
         isMoving = true;
         Quaternion targetRotation = isOpen ? closedRotation : openRotation;
 

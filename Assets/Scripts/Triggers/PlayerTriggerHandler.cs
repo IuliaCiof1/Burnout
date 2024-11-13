@@ -7,7 +7,7 @@ public class PlayerTriggerHandler : MonoBehaviour
         TriggerZone triggerZone = other.GetComponent<TriggerZone>();
         if (triggerZone != null)
         {
-            ActionManager.Instance.HandleTrigger(triggerZone.triggerID);
+            ActionManager.Instance.HandleTrigger(triggerZone.triggerID, triggerZone.description, triggerZone.sound);
             GameObject.Destroy(triggerZone.gameObject);
         }
     }
