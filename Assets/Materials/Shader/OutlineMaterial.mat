@@ -78,9 +78,9 @@ Material:
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _ExcludeFromTUAndAA: 0
-    - _Float: 0.2
+    - _Float: 0.54
     - _OpaqueCullMode: 2
-    - _Outline: -0.07
+    - _Outline: 0.2
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
