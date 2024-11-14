@@ -19,6 +19,7 @@ public class Controller : MonoBehaviour
     public float crouchHeight = 1f;
     public float standHeight = 2f;
 
+    public bool isMoving = false;
     public bool canMove = true; // Pentru cinematic-uri pe asta il setam pe false
     #endregion
 
@@ -57,6 +58,9 @@ public class Controller : MonoBehaviour
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
+
+        isMoving = (curSpeedX != 0 || curSpeedY != 0);
+
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)

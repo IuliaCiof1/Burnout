@@ -23,7 +23,5 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
         ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a Phone");
-
-
     }
 }

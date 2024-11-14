@@ -16,7 +16,8 @@ public class PlayerTriggerHandler : MonoBehaviour
             //Destroy(other.gameObject);
             //triggerZones[i].enabled = false;
         }
+            if (triggerZones[0] != null)
+                Destroy(other.gameObject);
 
-        Destroy(other.gameObject);
     }
 }

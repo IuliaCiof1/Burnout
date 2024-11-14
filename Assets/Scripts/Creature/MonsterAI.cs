@@ -4,16 +4,21 @@ using UnityEngine.AI; // For using NavMeshAgent
 
 public class MonsterAI : MonoBehaviour
 {
-    public float wanderRadius = 10f; // How far the monster will wander from its current position
-    public float wanderInterval = 5f; // How often the monster chooses a new random point
+    public float wanderRadius = 10f;
+    public float wanderInterval = 5f;
     public float wanderSpeed = 2f;
     public float chaseSpeed = 5f;
     public float hearingRange = 15f;
-    public float closeRange = 5f;
+    public float closeRange = 2f; // Very close range for instant detection
+    public float investigateRadius = 3f; // Radius around the noise location to search
+    public float investigateTime = 5f; // Time to investigate before giving up
     public NavMeshAgent agent;
     public Transform player;
 
     private bool isChasing = false;
+    private bool isInvestigating = false;
+    private float investigateEndTime = 0f;
+    private Vector3 lastHeardPosition;
     private float nextWanderTime = 0f;
 
     void Start()
@@ -28,6 +33,10 @@ public class MonsterAI : MonoBehaviour
         if (isChasing)
         {
             agent.SetDestination(player.position);
+        }
+        else if (isInvestigating)
+        {
+            Investigate();
         }
         else
         {
@@ -57,35 +66,59 @@ public class MonsterAI : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         Controller playerController = player.GetComponent<Controller>();
 
-        // Check if the player is within hearing range
-        if (distanceToPlayer < hearingRange)
+        if (distanceToPlayer < closeRange && playerController.isMoving)
         {
-            // If the player is crouching and far enough away, the monster should not hear the player
-            if (playerController.isCrouching && distanceToPlayer > closeRange)
+            isChasing = true;
+            agent.speed = chaseSpeed;
+            isInvestigating = false;
+        }
+        else if (distanceToPlayer < hearingRange)
+        {
+            if (playerController.isCrouching && !playerController.isMoving)
             {
-                Debug.Log("Player is crouching and far. Monster does not hear.");
                 isChasing = false;
                 agent.speed = wanderSpeed;
             }
-            else if (playerController.canMove && (distanceToPlayer <= closeRange || !playerController.isCrouching))
+            else if (playerController.isMoving)
             {
-                // If the player is running or moving within close range, the monster hears them
-                Debug.Log("Player detected! Monster is chasing.");
-                isChasing = true;
-                agent.speed = chaseSpeed;
-            }
-            else
-            {
-                Debug.Log("Player is out of hearing range or making no noise.");
+                lastHeardPosition = player.position;
                 isChasing = false;
+                isInvestigating = true;
+                investigateEndTime = Time.time + investigateTime;
                 agent.speed = wanderSpeed;
+                agent.SetDestination(lastHeardPosition + Random.insideUnitSphere * investigateRadius);
             }
         }
-        else
+    }
+
+    void Investigate()
+    {
+        if (Time.time >= investigateEndTime)
         {
-            Debug.Log("Player is out of hearing range.");
-            isChasing = false;
-            agent.speed = wanderSpeed;
+            isInvestigating = false;
+            ChooseRandomDestination();
         }
+        else if (Vector3.Distance(transform.position, lastHeardPosition) <= investigateRadius)
+        {
+            agent.SetDestination(lastHeardPosition + Random.insideUnitSphere * investigateRadius);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Found You");
+            agent.isStopped = true;
+
+            Controller playerController = player.GetComponent<Controller>(); 
+            playerController.canMove = false;
+
+            TriggerScreamer();
+        }
+    }
+    void TriggerScreamer()
+    {
+        Debug.Log("Screamer activated!");
     }
 }

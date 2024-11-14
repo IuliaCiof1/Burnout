@@ -22,11 +22,15 @@ public class CH1_Cockroach : MonoBehaviour
     public float cohesionDistance = 10.0f;
     public float maxFlockSpeed = 0.4f;
 
+    private float initialYPosition;
+
+
     private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
 
     void Start()
     {
         allCockroaches.Add(this);
+        initialYPosition = transform.position.y;
         ChangeState(new CH1_Moving());
     }
 
@@ -43,6 +47,7 @@ public class CH1_Cockroach : MonoBehaviour
         }
 
         RotateTowardsDirection();
+        MaintainYPosition();
     }
 
 
@@ -58,6 +63,14 @@ public class CH1_Cockroach : MonoBehaviour
             ChangeState(new CH1_Dead());
         }
     }
+
+    void MaintainYPosition()
+    {
+        Vector3 position = transform.position;
+        position.y = initialYPosition;
+        transform.position = position;
+    }
+
 
     public void ChangeState(State newState)
     {
@@ -164,6 +177,7 @@ public class CH1_Cockroach : MonoBehaviour
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(-direction, Vector3.up);
+            targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
