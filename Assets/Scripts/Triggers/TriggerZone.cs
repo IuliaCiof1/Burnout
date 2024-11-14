@@ -1,8 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerZone : MonoBehaviour
+public abstract class TriggerZone : MonoBehaviour
 {
-    public int triggerID;
-    [TextArea] public string description;
-    public AudioClip sound;
+    protected int triggerID;
+
+    //public TriggerZone(int triggerID)
+    //{
+    //    this.triggerID = triggerID;
+    //}
+
+    public abstract void Trigger() ; 
 }

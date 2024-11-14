@@ -1,8 +1,14 @@
+using System.Collections.Generic;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
     public static ActionManager Instance { get; private set; }
+
+    [SerializeField] TMP_Text dialogTextUI;
+    GameObject textContainer;
 
     private void Awake()
     {
@@ -14,18 +20,22 @@ public class ActionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        textContainer = dialogTextUI.transform.parent.gameObject;
     }
 
-    public void HandleTrigger(int triggerID, string description, AudioClip Sound)
-    {
+   
 
+    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound, List<GameObject> triggerObjects)
+    {
+        
         switch (triggerID)
         {
             case 1:
-                StartDialogue();
+                StartDialogue(dialogText);
                 break;
             case 2:
-                ShowScaryObject();
+                ShowScaryObject(triggerObjects);
                 break;
             case 3:
                 PlaySoundEffect();
@@ -35,20 +45,46 @@ public class ActionManager : MonoBehaviour
             case 5:
                 PlayDoorAudio();
                 break;
+            case 6:
+                HideScaryObject(triggerObjects);
+                break;
             default:
                 Debug.LogWarning("Unhandled triggerID: " + triggerID);
                 break;
         }
     }
 
-    private void StartDialogue()
+    private void StartDialogue(string dialogText)
     {
-        Debug.Log("Starting Dialogue...");
+        textContainer.SetActive(true);
+        dialogTextUI.text = dialogText;
+        StartCoroutine(DialogTimer());
+        Debug.Log("[]: "+ dialogText);
     }
 
-    private void ShowScaryObject()
+    IEnumerator DialogTimer()
     {
-        Debug.Log("Showing scary  ...");
+        yield return new WaitForSeconds(4);
+        textContainer.SetActive(false);
+    }
+
+    private void ShowScaryObject(List<GameObject> triggerObjects)
+    {
+        print("show");
+        foreach (GameObject triggerObject in triggerObjects)
+        {
+          
+            triggerObject.SetActive(true);
+        }
+        
+    }
+
+    private void HideScaryObject(List<GameObject> triggerObjects)
+    {
+        print("hide");
+        foreach (GameObject triggerObject in triggerObjects)
+            triggerObject.SetActive(false);
+        
     }
 
     private void PlaySoundEffect()

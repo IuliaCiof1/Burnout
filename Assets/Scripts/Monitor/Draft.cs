@@ -15,6 +15,8 @@ public class Draft : MonoBehaviour
     [SerializeField] GameObject spookyMail;
     [SerializeField] float spookyMailDelay;
 
+    [SerializeField] [TextArea] string dialogText;
+    bool dialogFinished;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,14 @@ public class Draft : MonoBehaviour
                 {
                     textArea.text += textToWrite[index];
                     index++;
+
+                    if (!dialogFinished)
+                    {
+                        ActionManager.Instance.HandleTrigger(1, dialogText, null, null);
+                        dialogFinished = true;
+                    }
                 }
+                
             }
         }
     }
@@ -49,17 +58,30 @@ public class Draft : MonoBehaviour
         if (index == textToWrite.Length - 1)
         {
             ObjectiveEvents.SendEmail();
+            print("aaaa1");
+            ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
             draftMail.SetActive(false);
 
-            StartCoroutine(Delay());
+            //ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
+
+            //StartCoroutine(Delay());
         }
         else
             print("I need to finish writing the mail first");
+    }
+
+
+    public void SendSpookyMail()
+    {
+        print("aaaaaa");
+        StartCoroutine(Delay());
     }
 
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(spookyMailDelay);
         spookyMail.SetActive(true);
+        ObjectiveEvents.OnOpenSpookyMail -= SendSpookyMail;
+
     }
 }

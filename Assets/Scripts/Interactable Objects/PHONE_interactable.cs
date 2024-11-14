@@ -20,7 +20,10 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
             playerFlashlight.EnableFlashlight();
 
         phoneInHand.ShowPhone();
+        ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a Phone");
+
+
     }
 }

@@ -21,12 +21,15 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     [SerializeField] private Phone phone;
 
+
+
     private void Start()
     {
         
         camera = Camera.main;
         fieldOfView = camera.fieldOfView;
-        
+        StartState();
+
     }
 
     public void Interact()
@@ -47,6 +50,23 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
                 GetUp();
             }
         }
+    }
+
+    void StartState()
+    {
+        isSitting = true;
+
+        oldPlayerPos = player.transform.position;
+        playerController.enabled = false;
+
+        Sequence sequence = DOTween.Sequence();
+
+        // Move the player to the sit position, then rotate the player to face the monitor
+        player.transform.LookAt(rotateToSitPoint.position);
+        player.transform.position = monitorCamera.position;
+        // After the player is positioned, rotate the camera to look at the monitor
+        camera.transform.LookAt(lookAtPoint.position);
+        camera.fieldOfView = monitorCamera.GetComponent<Camera>().fieldOfView;
     }
 
     void SitAtComputer()

@@ -4,11 +4,19 @@ public class PlayerTriggerHandler : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        TriggerZone triggerZone = other.GetComponent<TriggerZone>();
-        if (triggerZone != null)
+        TriggerZone []triggerZones = other.GetComponents<TriggerZone>();
+
+        for (int i = 0; i < triggerZones.Length; i++)
         {
-            ActionManager.Instance.HandleTrigger(triggerZone.triggerID, triggerZone.description, triggerZone.sound);
-            GameObject.Destroy(triggerZone.gameObject);
+            if (triggerZones[i] != null)
+            {
+                triggerZones[i].Trigger();
+
+            }
+            //Destroy(other.gameObject);
+            //triggerZones[i].enabled = false;
         }
+
+        Destroy(other.gameObject);
     }
 }

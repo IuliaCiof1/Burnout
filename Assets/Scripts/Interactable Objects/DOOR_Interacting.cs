@@ -26,7 +26,7 @@ public class DOOR_Interacting : MonoBehaviour, IInteractable
 
     private IEnumerator RotateDoor()
     {
-        ActionManager.Instance.HandleTrigger(5, "", audio);
+        ActionManager.Instance.HandleTrigger(5, "", audio, null);
 
         isMoving = true;
         Quaternion targetRotation = isOpen ? closedRotation : openRotation;

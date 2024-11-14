@@ -6,6 +6,6 @@ public class SpookyMail : MonoBehaviour
 {
    public void OpenSpookMail()
     {
-        ObjectiveEvents.OpenSpookyMail();
+        //ObjectiveEvents.OpenSpookyMail();
     }
 }
