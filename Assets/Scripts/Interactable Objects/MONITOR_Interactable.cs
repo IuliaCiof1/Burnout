@@ -23,7 +23,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
 
 
-    private void Start()
+    private void Awake()
     {
         
         camera = Camera.main;
@@ -54,6 +54,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void StartState()
     {
+        print("first");
         isSitting = true;
 
         oldPlayerPos = player.transform.position;

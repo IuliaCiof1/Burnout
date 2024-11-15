@@ -58,10 +58,10 @@ public class Draft : MonoBehaviour
         if (index == textToWrite.Length - 1)
         {
             ObjectiveEvents.SendEmail();
-            print("aaaa1");
-            ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
+            
+            ObjectiveEvents.OnSpookyEmailSent += SendSpookyMail;
             draftMail.SetActive(false);
-
+            print("aaaa1");
             //ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
 
             //StartCoroutine(Delay());
@@ -81,7 +81,7 @@ public class Draft : MonoBehaviour
     {
         yield return new WaitForSeconds(spookyMailDelay);
         spookyMail.SetActive(true);
-        ObjectiveEvents.OnOpenSpookyMail -= SendSpookyMail;
+        ObjectiveEvents.OnSpookyEmailSent -= SendSpookyMail;
 
     }
 }

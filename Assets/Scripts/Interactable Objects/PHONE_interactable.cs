@@ -9,7 +9,8 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        phoneInHand.HidePhone();
+
+        //phoneInHand.HidePhone();
     }
 
     public void Interact()
@@ -19,7 +20,9 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
         if (playerFlashlight != null)
             playerFlashlight.EnableFlashlight();
 
+        phoneInHand.IsCollected = true;
         phoneInHand.ShowPhone();
+
         ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a Phone");

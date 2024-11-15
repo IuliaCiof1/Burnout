@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
      void Start()
     {
         SelfLightComponent = gameObject.GetComponent<Light>();
-        StartCoroutine(Flicker());
+        //StartCoroutine(Flicker());
     }
 
     public IEnumerator Flicker()

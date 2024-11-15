@@ -5,11 +5,22 @@ using UnityEngine;
 public class Phone : MonoBehaviour
 {
     [SerializeField] Vector3 positionOffset;
+    Vector3 hidePosition;
+    Vector3 showPosition;
+
+
     [SerializeField] Vector3 rotationOffset;
+    public bool IsCollected{ get; set; }
+
+    private bool isHidden;
+
     // Start is called before the first frame update
     void Start()
     {
+        //hidePosition = transform.position - new Vector3(0, 3, 0);
         
+
+        HidePhone();
     }
 
     // Update is called once per frame
@@ -22,11 +33,23 @@ public class Phone : MonoBehaviour
 
     public void HidePhone()
     {
-        positionOffset += new Vector3(0, -3, 0);
+        if (!isHidden)
+        {
+            isHidden = true;
+            //showPosition = transform.localPosition;
+            positionOffset -= new Vector3(0, 3, 0);
+        }
     }
 
     public void ShowPhone()
     {
-        positionOffset += new Vector3(0, +3, 0);
+        print(IsCollected);
+        if (IsCollected && isHidden)
+        {
+            //transform.localPosition = showPosition;
+            isHidden = false;
+            positionOffset += new Vector3(0, 3, 0);
+            
+        }
     }
 }
