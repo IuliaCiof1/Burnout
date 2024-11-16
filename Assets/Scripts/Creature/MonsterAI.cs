@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI; // For using NavMeshAgent
+using UnityEngine.AI;
 
 public class MonsterAI : MonoBehaviour
 {
@@ -9,9 +9,10 @@ public class MonsterAI : MonoBehaviour
     public float wanderSpeed = 2f;
     public float chaseSpeed = 5f;
     public float hearingRange = 15f;
-    public float closeRange = 2f; // Very close range for instant detection
-    public float investigateRadius = 3f; // Radius around the noise location to search
-    public float investigateTime = 5f; // Time to investigate before giving up
+    public float closeRange = 2f;
+    public float investigateRadius = 3f;
+    public float investigateTime = 5f;
+    public float safeDistanceFromPlayer = 1.5f;
     public NavMeshAgent agent;
     public Transform player;
 
@@ -93,7 +94,16 @@ public class MonsterAI : MonoBehaviour
 
     void Investigate()
     {
-        if (Time.time >= investigateEndTime)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer <= safeDistanceFromPlayer)
+        {
+            // If too close to the player, stop moving or move away slightly
+            Vector3 awayFromPlayer = (transform.position - player.position).normalized * safeDistanceFromPlayer;
+            Vector3 safePosition = player.position + awayFromPlayer;
+            agent.SetDestination(safePosition);
+        }
+        else if (Time.time >= investigateEndTime)
         {
             isInvestigating = false;
             ChooseRandomDestination();
@@ -111,12 +121,13 @@ public class MonsterAI : MonoBehaviour
             Debug.Log("Found You");
             agent.isStopped = true;
 
-            Controller playerController = player.GetComponent<Controller>(); 
+            Controller playerController = player.GetComponent<Controller>();
             playerController.canMove = false;
 
             TriggerScreamer();
         }
     }
+
     void TriggerScreamer()
     {
         Debug.Log("Screamer activated!");
