@@ -3,12 +3,13 @@ using UnityEngine;
 public class InteractionHandler : MonoBehaviour
 {
     public Transform InteractorSource;
-    public float InteractorRange = 5f;
+    public float InteractorRange = 4f;
+
+    public GameObject Cross;
+    public GameObject Eye;
+    public GameObject Hand;
 
     private GameObject currentTarget;
-    private Material originalMaterial;
-
-    public Material outlineMaterial;
 
     private void Update()
     {
@@ -31,7 +32,6 @@ public class InteractionHandler : MonoBehaviour
         }
     }
 
-
     private void HandleHighlighting()
     {
         Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);
@@ -42,71 +42,36 @@ public class InteractionHandler : MonoBehaviour
 
             if (hitObject != currentTarget)
             {
-                ClearOutline();
-
                 currentTarget = hitObject;
-                Renderer renderer = currentTarget.GetComponent<Renderer>();
 
-                if (renderer != null && outlineMaterial != null)
+                if (hitObject.TryGetComponent(out IInspectable _))
                 {
-                    originalMaterial = renderer.material;
-                    renderer.material = outlineMaterial;
+                    SetCrosshair(Eye);
+                }
+                else if (hitObject.TryGetComponent(out IInteractable _))
+                {
+                    SetCrosshair(Hand);
+                }
+                else
+                {
+                    SetCrosshair(Cross);
                 }
             }
         }
         else
         {
-            ClearOutline();
+            currentTarget = null;
+            SetCrosshair(Cross);
         }
     }
 
-    //private void HandleHighlighting()
-    //{
-    //    Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);
-
-    //    if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractorRange))
-    //    {
-    //        GameObject hitObject = hitInfo.collider.gameObject;
-
-    //        if (hitObject.TryGetComponent(out IInteractable interactable))
-    //        {
-    //            if (hitObject != currentTarget)
-    //            {
-    //                ClearOutline();
-
-    //                currentTarget = hitObject;
-    //                Renderer renderer = currentTarget.GetComponent<Renderer>();
-
-    //                if (renderer != null && outlineMaterial != null)
-    //                {
-    //                    originalMaterial = renderer.material;
-    //                    renderer.material = outlineMaterial;
-    //                }
-    //            }
-    //        }
-    //        else
-    //        {
-    //            ClearOutline();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        ClearOutline();
-    //    }
-    //}
-
-    private void ClearOutline()
+    private void SetCrosshair(GameObject activeCrosshair)
     {
-        if (currentTarget != null)
-        {
-            Renderer renderer = currentTarget.GetComponent<Renderer>();
-            if (renderer != null && originalMaterial != null)
-            {
-                renderer.material = originalMaterial;
-            }
+        Cross.SetActive(false);
+        Eye.SetActive(false);
+        Hand.SetActive(false);
 
-            currentTarget = null;
-        }
+        activeCrosshair.SetActive(true);
     }
 
 }
