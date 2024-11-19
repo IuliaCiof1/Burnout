@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
@@ -6,6 +7,9 @@ public class PauseMenu : MonoBehaviour
     private bool isPaused = false;
     public Controller player;
     public MONITOR_Interactable monitor;
+    [SerializeField] private GameObject VolumeUI;
+    [SerializeField] private GameObject MenuUI;
+
     private void Start()
     {
         pauseMenuUI.SetActive(false);
@@ -13,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (!monitor.isSitting) // TO SOLVE
+        if (!monitor.isSitting) // TO SOLVE 2+2 = 3 scandura te cheama ma-ta
         {
             if (Input.GetKeyDown(KeyCode.Escape) && player.canMove)
                 Pause();
@@ -32,6 +36,16 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+    public void VolumeControl()
+    {
+        VolumeUI.SetActive(true);
+        MenuUI.SetActive(false);
+    }
+    public void ReturnMenu()
+    {
+        VolumeUI.SetActive(false);
+        MenuUI.SetActive(true);
+    }
 
     void Pause()
     {
@@ -39,7 +53,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         player.canMove = false;
-
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -49,4 +62,5 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Game is quitting...");
     }
+
 }

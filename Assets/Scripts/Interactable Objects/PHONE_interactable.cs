@@ -6,7 +6,7 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
 {
 
     [SerializeField]public Phone phoneInHand;
-
+    [SerializeField]public AudioClip PickUpSoundFX;
     private void Start()
     {
 
@@ -22,7 +22,7 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
 
         phoneInHand.IsCollected = true;
         phoneInHand.ShowPhone();
-
+        SoundFXManager.instance.PlaySoundFXClip(PickUpSoundFX, transform, 1f);
         ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a Phone");

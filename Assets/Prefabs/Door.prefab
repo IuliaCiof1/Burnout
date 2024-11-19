@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8697d3cb888036468f39016a51f85b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DoorRotateFX: {fileID: 8300000, guid: 1e141cfe2f113b44ba58e64e337b963a, type: 3}
 --- !u!1001 &7770002901211466726
 PrefabInstance:
   m_ObjectHideFlags: 0
