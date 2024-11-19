@@ -6,9 +6,12 @@ public class CH1_Dead : State
 {
     public override void Enter(CH1_Cockroach bug)
     {
-        bug.SetDeadVisual();
-        bug.DisableMovement();
-        bug.direction = Vector3.zero;
+        if (!bug.isAggresive)
+        {
+            bug.SetDeadVisual();
+            bug.DisableMovement();
+            bug.direction = Vector3.zero;
+        }
     }
 
     public override void Update(CH1_Cockroach bug) { }

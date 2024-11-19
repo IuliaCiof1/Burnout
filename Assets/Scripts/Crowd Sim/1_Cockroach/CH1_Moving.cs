@@ -18,12 +18,13 @@ public class CH1_Moving : State
 
         if (bug.IsPlayerNearby())
         {
-            bug.ChangeState(new CH1_Fleeing());
+            if (!bug.isAggresive)
+                bug.ChangeState(new CH1_Fleeing());
+            else
+                bug.ChangeState(new CH1_Attack());
         }
         else if (UnityEngine.Random.value < 0.02f)
-        {
             bug.ChangeState(new CH1_Resting());
-        }
     }
 
     public override void Exit(CH1_Cockroach bug) { /* Optional cleanup */ }

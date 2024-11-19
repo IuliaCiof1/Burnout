@@ -8,10 +8,11 @@ public class CH1_Cockroach : MonoBehaviour
 {
     private State currentState;
     public Vector3 direction;
-    private float speed = 0.4f;
+    public float speed = 0.4f;
 
     public Animator CS1_Anim;
 
+    public bool isAggresive = false;
 
     private float changeDirectionTimer;
     private float randomChangeTime;
@@ -23,6 +24,7 @@ public class CH1_Cockroach : MonoBehaviour
     public float maxFlockSpeed = 0.4f;
 
     private float initialYPosition;
+    private Collider cockroachCollider;
 
 
     private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
@@ -31,6 +33,7 @@ public class CH1_Cockroach : MonoBehaviour
     {
         allCockroaches.Add(this);
         initialYPosition = transform.position.y;
+        cockroachCollider = GetComponent<Collider>();
         ChangeState(new CH1_Moving());
     }
 
@@ -46,6 +49,9 @@ public class CH1_Cockroach : MonoBehaviour
             SetRandomDirection();
         }
 
+        AvoidObstacles();
+        ApplyFlockingBehavior();
+
         RotateTowardsDirection();
         MaintainYPosition();
     }
@@ -58,7 +64,7 @@ public class CH1_Cockroach : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isAggresive)
         {
             ChangeState(new CH1_Dead());
         }
@@ -125,7 +131,8 @@ public class CH1_Cockroach : MonoBehaviour
 
             if (distance < separationDistance)
             {
-                separation += (transform.position - cockroach.transform.position).normalized / distance;
+                Vector3 awayFromOther = (transform.position - cockroach.transform.position).normalized / distance;
+                separation += awayFromOther;
                 separationCount++;
             }
 
@@ -142,15 +149,57 @@ public class CH1_Cockroach : MonoBehaviour
             }
         }
 
-        if (separationCount > 0) separation /= separationCount;
-        if (alignmentCount > 0) alignment /= alignmentCount;
-        if (cohesionCount > 0) cohesion = (cohesion / cohesionCount - transform.position).normalized;
+        if (separationCount > 0)
+        {
+            separation /= separationCount;
+            separation = separation.normalized; 
+        }
 
-        Vector3 flockDirection = separation + alignment + cohesion;
+        if (alignmentCount > 0)
+        {
+            alignment /= alignmentCount;
+            alignment = alignment.normalized;
+        }
+
+        if (cohesionCount > 0)
+        {
+            cohesion /= cohesionCount;
+            cohesion = (cohesion - transform.position).normalized;
+        }
+
+        Vector3 flockDirection = separation * 1.5f + alignment * 1.0f + cohesion * 1.0f;
+
         if (flockDirection != Vector3.zero)
         {
             direction = Vector3.Lerp(direction, flockDirection.normalized, 0.1f);
             speed = Mathf.Lerp(speed, maxFlockSpeed, 0.05f);
+        }
+    }
+    public void AvoidObstacles()
+    {
+        float obstacleAvoidanceRange = 2.0f; 
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, direction, out hit, obstacleAvoidanceRange))
+        {
+            if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
+            {
+                Vector3 avoidDirection = Vector3.Reflect(direction, hit.normal);
+                direction = Vector3.Lerp(direction, avoidDirection.normalized, 0.5f); 
+            }
+        }
+    }
+
+    public void SetAggressive(bool aggressive)
+    {
+        isAggresive = aggressive;
+        if (isAggresive)
+        {
+            cockroachCollider.enabled = false; // Disable collider when aggressive
+        }
+        else
+        {
+            cockroachCollider.enabled = true; // Enable collider otherwise
         }
     }
 
