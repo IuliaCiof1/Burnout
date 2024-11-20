@@ -7,11 +7,12 @@ public class CH1_Fleeing : State
     public override void Enter(CH1_Cockroach bug)
     {
         bug.SetFleeDirection();
-        bug.SetFleeingVisual();
     }
 
     public override void Update(CH1_Cockroach bug)
     {
+        bug.SetMovingVisual();
+        bug.speed = 0.6f;
         bug.Move();
 
         if (!bug.IsPlayerNearby())

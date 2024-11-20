@@ -6,29 +6,32 @@ using UnityEngine;
 
 public class CH1_Cockroach : MonoBehaviour
 {
-    private State currentState;
-    public Vector3 direction;
-    public float speed = 0.4f;
+    #region - Declarations
+    private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
+
+    [SerializeField] public AudioClip AttackingSound;
+    [SerializeField] public AudioClip WalkingSound;
+    [SerializeField] public AudioClip DyingSound;
 
     public Animator CS1_Anim;
 
-    public bool isAggresive = false;
+    private State currentState;
+    public Vector3 direction;
+    private Collider cockroachCollider;
+    public float speed = 0.4f;
 
+    public bool isAggresive = false;
     private float changeDirectionTimer;
     private float randomChangeTime;
-    public int flockID;  // ID for the specific flock/group
-
+    public int flockID;
     public float separationDistance = 10.0f;
     public float alignmentDistance = 10.0f;
     public float cohesionDistance = 10.0f;
     public float maxFlockSpeed = 0.4f;
-
     private float initialYPosition;
-    private Collider cockroachCollider;
+    #endregion
 
-
-    private static List<CH1_Cockroach> allCockroaches = new List<CH1_Cockroach>();
-
+    #region - Events
     void Start()
     {
         allCockroaches.Add(this);
@@ -69,14 +72,15 @@ public class CH1_Cockroach : MonoBehaviour
             ChangeState(new CH1_Dead());
         }
     }
+    #endregion
 
+    #region - Methods
     void MaintainYPosition()
     {
         Vector3 position = transform.position;
         position.y = initialYPosition;
         transform.position = position;
     }
-
 
     public void ChangeState(State newState)
     {
@@ -195,11 +199,11 @@ public class CH1_Cockroach : MonoBehaviour
         isAggresive = aggressive;
         if (isAggresive)
         {
-            cockroachCollider.enabled = false; // Disable collider when aggressive
+            cockroachCollider.enabled = false;
         }
         else
         {
-            cockroachCollider.enabled = true; // Enable collider otherwise
+            cockroachCollider.enabled = true;
         }
     }
 
@@ -237,9 +241,9 @@ public class CH1_Cockroach : MonoBehaviour
         CS1_Anim.SetBool("anim_death", true);
     }
 
-    public void SetFleeingVisual()
+    public void SetAttackVisuals()
     {
-        CS1_Anim.SetTrigger("anim_Fleeing");
+        CS1_Anim.SetTrigger("anim_Attacking");
     }
 
     public void SetMovingVisual() 
@@ -251,5 +255,7 @@ public class CH1_Cockroach : MonoBehaviour
     {
         CS1_Anim.SetTrigger("anim_Idle");
     }
+    #endregion
+
     #endregion
 }

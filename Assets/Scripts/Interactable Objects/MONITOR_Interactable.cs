@@ -40,11 +40,8 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     private void Update()
     {
-
         if (isSitting)
         {
-
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GetUp();

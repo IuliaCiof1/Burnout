@@ -14,6 +14,7 @@ public class CH1_Moving : State
     {
         bug.ApplyFlockingBehavior();
         bug.SetMovingVisual();
+        bug.speed = 0.4f;
         bug.Move();
 
         if (bug.IsPlayerNearby())

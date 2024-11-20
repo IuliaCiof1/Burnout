@@ -6,10 +6,11 @@ public class CH1_Attack : State
     private float chaseSpeed = 0.6f;
     private float maxChaseDistance = 10f;
     private float obstacleAvoidanceRange = 1.5f;
+    private float attackRange = 5f;
 
     public override void Enter(CH1_Cockroach bug)
     {
-        bug.SetMovingVisual();
+        bug.SetAttackVisuals();
     }
 
     public override void Update(CH1_Cockroach bug)
@@ -25,13 +26,18 @@ public class CH1_Attack : State
             return;
         }
 
+        if (distanceToPlayer <= attackRange)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(bug.AttackingSound, bug.transform, 0.01f);
+        }
+
         Vector3 directionToPlayer = (player.transform.position - bug.transform.position).normalized;
 
         Vector3 adjustedDirection = AvoidObstacles(bug, directionToPlayer);
 
-        bug.SetMovingVisual();
+        bug.SetAttackVisuals();
         bug.direction = adjustedDirection;
-        bug.speed = chaseSpeed; 
+        bug.speed = chaseSpeed;
         bug.Move();
     }
 
@@ -41,16 +47,23 @@ public class CH1_Attack : State
 
     private Vector3 AvoidObstacles(CH1_Cockroach bug, Vector3 targetDirection)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(bug.transform.position, targetDirection, out hit, obstacleAvoidanceRange))
+        float avoidanceStrength = 0.02f;
+        Vector3 avoidanceVector = Vector3.zero;
+
+        Collider[] nearbyObjects = Physics.OverlapSphere(bug.transform.position, obstacleAvoidanceRange);
+
+        foreach (var obj in nearbyObjects)
         {
-            if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
+            if (obj.CompareTag("CockRoach") && obj.gameObject != bug.gameObject)
             {
-                Vector3 avoidDirection = Vector3.Reflect(targetDirection, hit.normal);
-                return avoidDirection.normalized;
+                Vector3 directionAway = bug.transform.position - obj.transform.position;
+                avoidanceVector += directionAway.normalized / directionAway.magnitude;
             }
         }
 
-        return targetDirection;
+        Vector3 combinedDirection = targetDirection + avoidanceVector * avoidanceStrength;
+
+        return combinedDirection.normalized;
     }
+
 }

@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public MONITOR_Interactable monitor;
     [SerializeField] private GameObject VolumeUI;
     [SerializeField] private GameObject MenuUI;
+    private bool VolumeSettingOn = false;
 
     private void Start()
     {
@@ -17,12 +18,17 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (!monitor.isSitting) // TO SOLVE 2+2 = 3 scandura te cheama ma-ta
+        if (!monitor.isSitting)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && player.canMove)
-                Pause();
-            else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
-                Resume();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (player.canMove)
+                    Pause();
+                else if (isPaused && !VolumeSettingOn)
+                    Resume();
+                else if (VolumeSettingOn)
+                    ToggleVolumeMenu(false);
+            }
         }
     }
 
@@ -36,15 +42,12 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    public void VolumeControl()
+
+    public void ToggleVolumeMenu(bool showVolume)
     {
-        VolumeUI.SetActive(true);
-        MenuUI.SetActive(false);
-    }
-    public void ReturnMenu()
-    {
-        VolumeUI.SetActive(false);
-        MenuUI.SetActive(true);
+        VolumeSettingOn = showVolume;
+        VolumeUI.SetActive(showVolume);
+        MenuUI.SetActive(!showVolume);
     }
 
     void Pause()
@@ -62,5 +65,4 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Game is quitting...");
     }
-
 }
