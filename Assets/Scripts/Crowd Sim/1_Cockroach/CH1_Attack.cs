@@ -28,7 +28,7 @@ public class CH1_Attack : State
 
         if (distanceToPlayer <= attackRange)
         {
-            SoundFXManager.instance.PlaySoundFXClip(bug.AttackingSound, bug.transform, 0.01f);
+            //SoundFXManager.instance.PlaySoundFXClip(bug.AttackingSound, bug.transform, 0.01f); ASTA nu trebuie sa se intample la fiecare frame
         }
 
         Vector3 directionToPlayer = (player.transform.position - bug.transform.position).normalized;

@@ -56,9 +56,21 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
 
         if (playerInside)
         {
+            GameObject playerManager = GameObject.FindWithTag("PlayerManager");
+            if (playerManager != null)
+            {
+                playerManager.transform.SetParent(transform);
+            }
+
             doorAnimator.SetTrigger("closeDoor");
             yield return new WaitForSeconds(4f);
+
             StartCoroutine(MoveToTarget());
+
+            if (playerManager != null)
+            {
+                playerManager.transform.SetParent(null); // Detach the player from the elevator
+            }
         }
     }
 
