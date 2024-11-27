@@ -67,10 +67,7 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
 
             StartCoroutine(MoveToTarget());
 
-            if (playerManager != null)
-            {
-                playerManager.transform.SetParent(null); // Detach the player from the elevator
-            }
+ 
         }
     }
 

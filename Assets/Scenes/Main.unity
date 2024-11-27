@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4.2631555, g: 5.2252717, b: 6.740426, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -22117,6 +22117,7 @@ MonoBehaviour:
   safeDistanceFromPlayer: 1.5
   agent: {fileID: 1095675907}
   player: {fileID: 499905030}
+  playerController: {fileID: 1814899144}
 --- !u!195 &1095675907
 NavMeshAgent:
   m_ObjectHideFlags: 0

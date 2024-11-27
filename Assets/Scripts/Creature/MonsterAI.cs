@@ -15,6 +15,8 @@ public class MonsterAI : MonoBehaviour
     public float safeDistanceFromPlayer = 1.5f;
     public NavMeshAgent agent;
     public Transform player;
+    public Controller playerController;
+
 
     private bool isChasing = false;
     private bool isInvestigating = false;
@@ -65,7 +67,7 @@ public class MonsterAI : MonoBehaviour
     void DetectPlayer()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        Controller playerController = player.GetComponent<Controller>();
+        //Controller playerController = player.GetComponent<Controller>();
 
         if (distanceToPlayer < closeRange && playerController.isMoving)
         {
@@ -121,7 +123,7 @@ public class MonsterAI : MonoBehaviour
             Debug.Log("Found You");
             agent.isStopped = true;
 
-            Controller playerController = player.GetComponent<Controller>();
+            //Controller playerController = player.GetComponent<Controller>();
             playerController.canMove = false;
 
             TriggerScreamer();
