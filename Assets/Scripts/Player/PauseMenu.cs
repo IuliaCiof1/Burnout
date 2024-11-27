@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (!monitor.isSitting)
+        if (!MONITOR_Interactable.isSitting)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

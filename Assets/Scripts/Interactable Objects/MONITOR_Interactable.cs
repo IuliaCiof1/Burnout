@@ -17,7 +17,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     //Vector3 oldPlayerPos;
     float fieldOfView;
 
-    public bool isSitting;
+    public static bool isSitting;
 
     [SerializeField] private Phone phone;
 
