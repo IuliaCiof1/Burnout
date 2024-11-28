@@ -2200,7 +2200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 1543062743}
 --- !u!65 &81036263
 BoxCollider:
@@ -8000,7 +8000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 221564626}
 --- !u!1001 &310983249
 PrefabInstance:
@@ -41743,7 +41743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 916487542}
 --- !u!65 &2095819095
 BoxCollider:
