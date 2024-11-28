@@ -1,15 +1,13 @@
-using System.Collections;
 using UnityEngine;
 
 public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 {
-    [SerializeField] private float teleportDelay = 0.5f;
     [SerializeField] private Animator doorAnimator;
     [SerializeField] private AudioClip doorSound;
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Transform playerManager; 
+    [SerializeField] private Transform spawnPoint; 
 
-    private bool isInteracting = false; 
+    private bool isInteracting = false;
 
     public void Interact()
     {
@@ -19,22 +17,16 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
             return;
         }
 
-        if (spawnPoint == null)
+        if (spawnPoint == null || playerManager == null)
         {
-            Debug.LogError("SpawnPoint is not set! Please assign a valid spawn point.");
+            Debug.LogError("SpawnPoint or PlayerManager is not set! Please assign valid references.");
             return;
         }
 
-        if (playerTransform == null)
-        {
-            Debug.LogError("PlayerTransform is not set! Please assign a valid player transform.");
-            return;
-        }
-
-        StartCoroutine(OpenAndTeleport());
+        OpenAndTeleport();
     }
 
-    private IEnumerator OpenAndTeleport()
+    private void OpenAndTeleport()
     {
         isInteracting = true;
 
@@ -48,8 +40,6 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
             SoundFXManager.instance?.PlaySoundFXClip(doorSound, transform, 1f);
         }
 
-        yield return new WaitForSeconds(teleportDelay);
-
         TeleportPlayer();
 
         isInteracting = false;
@@ -57,8 +47,8 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 
     private void TeleportPlayer()
     {
-        playerTransform.position = spawnPoint.position;
-        playerTransform.rotation = spawnPoint.rotation;
-        Debug.Log($"Player teleported to {spawnPoint.name}.");
+        playerManager.position = spawnPoint.position;
+ 
+        Debug.Log($"Player teleported to {spawnPoint.position}.");
     }
 }

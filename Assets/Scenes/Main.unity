@@ -2198,10 +2198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6217d396781c52b489e2baf5f137a7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportDelay: 0.5
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerTransform: {fileID: 1814899146}
+  playerManager: {fileID: 0}
   spawnPoint: {fileID: 1543062743}
 --- !u!65 &81036263
 BoxCollider:
@@ -2850,6 +2849,9 @@ Transform:
   - {fileID: 762841699}
   - {fileID: 691556560}
   - {fileID: 68746707}
+  - {fileID: 950080515}
+  - {fileID: 512048695}
+  - {fileID: 1213936000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &135491593
@@ -5426,11 +5428,7 @@ Transform:
   m_LocalPosition: {x: 0.35, y: 24.164, z: 2.502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1814899146}
-  - {fileID: 950080515}
-  - {fileID: 512048695}
-  - {fileID: 1213936000}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &212078164
@@ -8000,10 +7998,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6217d396781c52b489e2baf5f137a7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportDelay: 0.5
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerTransform: {fileID: 1814899146}
+  playerManager: {fileID: 0}
   spawnPoint: {fileID: 221564626}
 --- !u!1001 &310983249
 PrefabInstance:
@@ -11479,11 +11476,11 @@ Transform:
   m_GameObject: {fileID: 512048694}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03738374, y: -0.7082958, z: 0.037616078, w: 0.7039209}
-  m_LocalPosition: {x: 6.006, y: 4.735, z: 13.458}
+  m_LocalPosition: {x: 7.4953566, y: 1.3610096, z: 7.3078136}
   m_LocalScale: {x: 1.0000166, y: 1.0000165, z: 1.0000167}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206889444}
+  m_Father: {fileID: 130065023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &516874597
 PrefabInstance:
@@ -18912,10 +18909,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6217d396781c52b489e2baf5f137a7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportDelay: 0.5
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerTransform: {fileID: 1814899146}
+  playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 1652646074}
 --- !u!65 &923928295
 BoxCollider:
@@ -19318,11 +19314,11 @@ Transform:
   m_GameObject: {fileID: 950080514}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03738374, y: -0.7082958, z: 0.037616078, w: 0.7039209}
-  m_LocalPosition: {x: 5.947, y: 4.881, z: 14.565}
-  m_LocalScale: {x: 1.0000198, y: 1.00002, z: 1.00002}
+  m_LocalPosition: {x: 7.4363565, y: 1.5070095, z: 8.414813}
+  m_LocalScale: {x: 1.0000198, y: 1.00002, z: 1.0000201}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206889444}
+  m_Father: {fileID: 130065023}
   m_LocalEulerAnglesHint: {x: 6.08, y: -90.355, z: 0}
 --- !u!114 &950080516
 MonoBehaviour:
@@ -23931,11 +23927,11 @@ Transform:
   m_GameObject: {fileID: 1213935999}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03738374, y: -0.7082958, z: 0.037616078, w: 0.7039209}
-  m_LocalPosition: {x: 4.557, y: 4.923, z: 14.414}
+  m_LocalPosition: {x: 6.0463567, y: 1.5490093, z: 8.263814}
   m_LocalScale: {x: 1.0000166, y: 1.0000165, z: 1.0000167}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206889444}
+  m_Father: {fileID: 130065023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217609011
 GameObject:
@@ -36001,13 +35997,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814899142}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 4.5, z: 13.79}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.35, y: 28.664, z: 16.292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 499905030}
-  m_Father: {fileID: 206889444}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1814899147
 MonoBehaviour:
@@ -41745,10 +41741,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6217d396781c52b489e2baf5f137a7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportDelay: 0.5
   doorAnimator: {fileID: 0}
   doorSound: {fileID: 0}
-  playerTransform: {fileID: 1814899146}
+  playerManager: {fileID: 0}
   spawnPoint: {fileID: 916487542}
 --- !u!65 &2095819095
 BoxCollider:
@@ -43893,6 +43888,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 130065023}
+  - {fileID: 1814899146}
   - {fileID: 206889444}
   - {fileID: 1855636105}
   - {fileID: 1863061681}
