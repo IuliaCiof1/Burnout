@@ -22,10 +22,12 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     [SerializeField] private Phone phone;
 
 
+    private Animator animator;
 
     private void Awake()
     {
-        
+        animator = player.GetComponentInChildren<Animator>();
+
         camera = Camera.main;
         fieldOfView = camera.fieldOfView;
         StartState();
@@ -53,7 +55,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     {
         print("first");
         isSitting = true;
-
+        //animator.SetBool("isSitting", true);
         oldPlayerPos = player.transform.position;
         playerController.enabled = false;
 
@@ -77,14 +79,14 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         playerController.enabled = false;
 
         Sequence sequence = DOTween.Sequence();
-        
+        animator.SetBool("isSitting", true);
         // Move the player to the sit position, then rotate the player to face the monitor
-        sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration))
-            .Append(player.transform.DOMove(monitorCamera.position, duration))
+        sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration)).Append(player.transform.DOMove(monitorCamera.position, duration)).Append(camera.transform.DOLookAt(lookAtPoint.position, duration))
+            
                 // After the player is positioned, rotate the camera to look at the monitor
-                .Append(camera.transform.DOLookAt(lookAtPoint.position, duration))
+                
                 .Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration));
-
+        
     }
 
     void GetUp()
@@ -96,7 +98,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
         // Start a DOTween sequence
         Sequence sequence = DOTween.Sequence();
-
+        animator.SetBool("isSitting", false);
         // Step 1: Temporarily unparent camera to change its field of view independently
         //camera.transform.SetParent(null, true);
 

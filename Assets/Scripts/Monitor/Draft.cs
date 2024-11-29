@@ -54,11 +54,11 @@ public class Draft : MonoBehaviour
 
     public void SendDraft()
     {
-        
+
         if (index == textToWrite.Length - 1)
         {
             ObjectiveEvents.SendEmail();
-            
+
             ObjectiveEvents.OnSpookyEmailSent += SendSpookyMail;
             draftMail.SetActive(false);
             print("aaaa1");
@@ -67,7 +67,11 @@ public class Draft : MonoBehaviour
             //StartCoroutine(Delay());
         }
         else
-            print("I need to finish writing the mail first");
+        {
+            dialogText = "I need to finish writing the mail first";
+            ActionManager.Instance.HandleTrigger(1, dialogText, null, null);
+            //print("I need to finish writing the mail first");
+        }
     }
 
 
