@@ -26,7 +26,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        animator = player.GetComponentInChildren<Animator>();
+        //animator = player.GetComponentInChildren<Animator>();
 
         camera = Camera.main;
         fieldOfView = camera.fieldOfView;
@@ -79,7 +79,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         playerController.enabled = false;
 
         Sequence sequence = DOTween.Sequence();
-        animator.SetBool("isSitting", true);
+        //animator.SetBool("isSitting", true);
         // Move the player to the sit position, then rotate the player to face the monitor
         sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration)).Append(player.transform.DOMove(monitorCamera.position, duration)).Append(camera.transform.DOLookAt(lookAtPoint.position, duration))
             
@@ -98,7 +98,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
         // Start a DOTween sequence
         Sequence sequence = DOTween.Sequence();
-        animator.SetBool("isSitting", false);
+        //animator.SetBool("isSitting", false);
         // Step 1: Temporarily unparent camera to change its field of view independently
         //camera.transform.SetParent(null, true);
 
