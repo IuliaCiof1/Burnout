@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEditor.Rendering;
 
 public class ActionManager : MonoBehaviour
 {
@@ -24,11 +25,11 @@ public class ActionManager : MonoBehaviour
         textContainer = dialogTextUI.transform.parent.gameObject;
     }
 
-   
 
-    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound, List<GameObject> triggerObjects)
+
+    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound, List<GameObject> triggerObjects = null)
     {
-        
+
         switch (triggerID)
         {
             case 1:
@@ -41,6 +42,7 @@ public class ActionManager : MonoBehaviour
                 PlaySoundEffect();
                 break;
             case 4:
+                DoorIsClosed(dialogText , Sound);
                 break;
             case 5:
                 PlayDoorAudio();
@@ -59,7 +61,7 @@ public class ActionManager : MonoBehaviour
         textContainer.SetActive(true);
         dialogTextUI.text = dialogText;
         StartCoroutine(DialogTimer());
-        Debug.Log("[]: "+ dialogText);
+        Debug.Log("[]: " + dialogText);
     }
 
     IEnumerator DialogTimer()
@@ -73,10 +75,10 @@ public class ActionManager : MonoBehaviour
         print("show");
         foreach (GameObject triggerObject in triggerObjects)
         {
-          
+
             triggerObject.SetActive(true);
         }
-        
+
     }
 
     private void HideScaryObject(List<GameObject> triggerObjects)
@@ -84,7 +86,7 @@ public class ActionManager : MonoBehaviour
         print("hide");
         foreach (GameObject triggerObject in triggerObjects)
             triggerObject.SetActive(false);
-        
+
     }
 
     private void PlaySoundEffect()
@@ -96,4 +98,11 @@ public class ActionManager : MonoBehaviour
     {
         Debug.Log("ABC");
     }
+
+    private void DoorIsClosed(string dialog, AudioClip sound)
+    {
+        StartDialogue(dialog);
+        SoundFXManager.instance.PlaySoundFXClip(sound, transform, 1f);
+    }
+
 }

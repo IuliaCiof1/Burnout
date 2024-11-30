@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InteractionHandler : MonoBehaviour
 {
+    public static InteractionHandler instance;
+
     public Transform InteractorSource;
     public float InteractorRange = 4f;
 
@@ -72,6 +74,18 @@ public class InteractionHandler : MonoBehaviour
         Hand.SetActive(false);
 
         activeCrosshair.SetActive(true);
+    }
+
+    public void VisibleCorsshair(bool state)
+    {
+        Cross.SetActive(state);
+        Eye.SetActive(state);
+        Hand.SetActive(state);
+
+        if (state)
+        {
+            SetCrosshair(Cross);
+        }
     }
 
 }

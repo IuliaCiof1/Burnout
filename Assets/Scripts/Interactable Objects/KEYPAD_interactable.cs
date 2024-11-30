@@ -1,16 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
+using Unity.VisualScripting;
 
 public class KEYPAD_interactable : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject keypadUI;
-    [SerializeField] private List<int> correctKeyCombo = new List<int> { 1, 2, 3, 4 };
+    [SerializeField] private List<int> correctKeyCombo = new List<int> { 9, 1, 7, 0 };
     [SerializeField] private GameObject playerController;
+    [SerializeField] private Transform keypadCameraTarget;
+    [SerializeField] private float cameraMoveDuration = 1f;
+    [SerializeField] private DOOR_Interacting door;
+    [SerializeField] public AudioClip BeepSound;
+    [SerializeField] public AudioClip Access_Denied;
+    [SerializeField] public AudioClip Access_Granted;
 
     private List<int> currentInput = new List<int>();
-    private bool isInteracting = false;
+    public static bool isInteracting = false;
     private Controller playerMovementScript;
+    private Transform playerCamera;
+    private Vector3 originalCameraPosition;
+    private Quaternion originalCameraRotation;
 
     private void Start()
     {
@@ -22,6 +32,7 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
         if (playerController != null)
         {
             playerMovementScript = playerController.GetComponent<Controller>();
+            playerCamera = playerMovementScript.playerCamera.transform;
         }
     }
 
@@ -34,7 +45,17 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
 
     private void EnterKeypadMode()
     {
+
         isInteracting = true;
+
+        if (playerCamera != null)
+        {
+            originalCameraPosition = playerCamera.position;
+            originalCameraRotation = playerCamera.rotation;
+
+            playerCamera.DOMove(keypadCameraTarget.position, cameraMoveDuration);
+            playerCamera.DORotateQuaternion(keypadCameraTarget.rotation, cameraMoveDuration);
+        }
 
         if (keypadUI != null)
         {
@@ -54,7 +75,14 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
 
     public void ExitKeypadMode()
     {
+
         isInteracting = false;
+
+        if (playerCamera != null)
+        {
+            playerCamera.DOMove(originalCameraPosition, cameraMoveDuration);
+            playerCamera.DORotateQuaternion(originalCameraRotation, cameraMoveDuration);
+        }
 
         if (keypadUI != null)
         {
@@ -76,31 +104,65 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
     {
         if (!isInteracting) return;
 
+        SoundFXManager.instance?.PlaySoundFXClip(BeepSound, transform, 0.8f);
+
         currentInput.Add(key);
         Debug.Log($"Key {key} pressed. Current input: {string.Join("", currentInput)}");
 
-        if (currentInput.Count <= correctKeyCombo.Count)
+        if (currentInput.Count == correctKeyCombo.Count)
         {
-            for (int i = 0; i < currentInput.Count; i++)
+            bool isCorrect = true;
+
+            for (int i = 0; i < correctKeyCombo.Count; i++)
             {
                 if (currentInput[i] != correctKeyCombo[i])
                 {
-                    Debug.LogWarning("Incorrect input. Resetting keypad.");
-                    ResetKeypad();
-                    return;
+                    isCorrect = false;
+                    break;
                 }
             }
 
-            if (currentInput.Count == correctKeyCombo.Count)
+            if (isCorrect)
             {
+                SoundFXManager.instance?.PlaySoundFXClip(Access_Granted, transform, 0.8f);
                 Debug.Log("Correct combination entered. Access granted.");
+                UnlockDoor();
                 ExitKeypadMode();
+            }
+            else
+            {
+                SoundFXManager.instance?.PlaySoundFXClip(Access_Denied, transform, 0.8f);
+                Debug.LogWarning("Incorrect combination entered. Try again.");
+
+                ResetKeypad();
             }
         }
     }
 
+
     private void ResetKeypad()
     {
         currentInput.Clear();
+    }
+
+    private void UnlockDoor()
+    {
+        if (door != null)
+        {
+            door.isLocked = false;
+            door.Interact();
+        }
+        else
+        {
+            Debug.LogError("Door reference not set in KEYPAD_interactable.");
+        }
+    }
+
+    private void Update()
+    {
+        if (isInteracting && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitKeypadMode();
+        }
     }
 }
