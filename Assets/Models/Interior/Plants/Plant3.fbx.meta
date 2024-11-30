@@ -3,7 +3,27 @@ guid: fe8a94df876b21a4da6d3b05ba6bf540
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Palm_Leaves
+    second: {fileID: 2100000, guid: 73e092bbbdb3f24428f6ff5acad16964, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pot_01
+    second: {fileID: 2100000, guid: 822398a5ae6f3d4478a5e388082b4a5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Soil
+    second: {fileID: 2100000, guid: 6cb13aa8c6be6e64c9e39434c90bffc8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stalk
+    second: {fileID: 2100000, guid: 0d847c3f4b608e146900514bb96a7cdb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
