@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 
 public class KEYPAD_interactable : MonoBehaviour, IInteractable
 {
+    #region - Declarations
     [SerializeField] private GameObject keypadUI;
     [SerializeField] private List<int> correctKeyCombo = new List<int> { 9, 1, 7, 0 };
     [SerializeField] private GameObject playerController;
@@ -18,10 +19,13 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
     private List<int> currentInput = new List<int>();
     public static bool isInteracting = false;
     private Controller playerMovementScript;
+    private InteractionHandler playerCorsshair;
     private Transform playerCamera;
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
+    #endregion
 
+    #region - Events
     private void Start()
     {
         if (keypadUI != null)
@@ -32,10 +36,20 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
         if (playerController != null)
         {
             playerMovementScript = playerController.GetComponent<Controller>();
+            playerCorsshair = playerController.GetComponent<InteractionHandler>();
             playerCamera = playerMovementScript.playerCamera.transform;
         }
     }
+    private void Update()
+    {
+        if (isInteracting && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitKeypadMode();
+        }
+    }
+    #endregion
 
+    #region - Methods
     public void Interact()
     {
         if (isInteracting) return;
@@ -45,6 +59,7 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
 
     private void EnterKeypadMode()
     {
+        SetCrosshairVisibility(false);
 
         isInteracting = true;
 
@@ -75,6 +90,7 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
 
     public void ExitKeypadMode()
     {
+        SetCrosshairVisibility(true);
 
         isInteracting = false;
 
@@ -96,7 +112,7 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        ResetKeypad();
         Debug.Log("Keypad interaction ended.");
     }
 
@@ -139,7 +155,6 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
         }
     }
 
-
     private void ResetKeypad()
     {
         currentInput.Clear();
@@ -158,11 +173,9 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
         }
     }
 
-    private void Update()
+    private void SetCrosshairVisibility(bool state)
     {
-        if (isInteracting && Input.GetKeyDown(KeyCode.Escape))
-        {
-            ExitKeypadMode();
-        }
+        playerCorsshair.VisibleCorsshair(state);
     }
+    #endregion
 }
