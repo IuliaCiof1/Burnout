@@ -7,6 +7,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
     [SerializeField] private Transform playerManager;
     [SerializeField] private Transform spawnPoint;
 
+    public bool isLocked = false;
     private bool isInteracting = false;
 
     public void Interact()
@@ -28,30 +29,32 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 
     private void OpenAndTeleport()
     {
-        isInteracting = true;
-
-        if (doorAnimator != null)
+        if (!isLocked)
         {
-            doorAnimator.SetTrigger("Open");
+            isInteracting = true;
+
+            if (doorAnimator != null)
+            {
+                doorAnimator.SetTrigger("Open");
+            }
+
+            if (doorSound != null)
+            {
+                SoundFXManager.instance?.PlaySoundFXClip(doorSound, transform, 1f);
+            }
+
+            TeleportPlayer();
+
+            isInteracting = false;
         }
-
-        if (doorSound != null)
-        {
-            SoundFXManager.instance?.PlaySoundFXClip(doorSound, transform, 1f);
-        }
-
-        TeleportPlayer();
-
-        isInteracting = false;
     }
 
     private void TeleportPlayer()
     {
-        // Find the Collider component on the player (child of playerManager)
-        Collider playerCollider = playerManager.GetComponentInChildren<Collider>();
+         Collider playerCollider = playerManager.GetComponentInChildren<Collider>();
         if (playerCollider != null)
         {
-            playerCollider.enabled = false; // Turn off the collider
+            playerCollider.enabled = false;
             Debug.Log("Player collider disabled.");
         }
         else
@@ -59,16 +62,14 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
             Debug.LogWarning("No Collider found on the player.");
         }
 
-        // Teleport the player
         playerManager.position = spawnPoint.position;
         playerManager.rotation = spawnPoint.rotation;
 
         Debug.Log($"Player teleported to {spawnPoint.position}.");
 
-        // Reactivate the collider after teleportation (optional)
         if (playerCollider != null)
         {
-            playerCollider.enabled = true; // Turn the collider back on
+            playerCollider.enabled = true;
             Debug.Log("Player collider re-enabled.");
         }
     }
