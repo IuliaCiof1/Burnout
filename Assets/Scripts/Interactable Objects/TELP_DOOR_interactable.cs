@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
@@ -6,6 +8,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip doorSound;
     [SerializeField] private Transform playerManager;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] public List<int> RequiredKeys = new List<int>();
 
     public bool isLocked = false;
     private bool isInteracting = false;
@@ -23,8 +26,16 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
             Debug.LogError("SpawnPoint or PlayerManager is not set! Please assign valid references.");
             return;
         }
+        bool hasAllKeys = RequiredKeys.TrueForAll(key => GlobalStateManager.HasKey(key));
 
-        OpenAndTeleport();
+        if (hasAllKeys)
+        {
+            OpenAndTeleport();
+        }
+        else
+        {
+            ActionManager.Instance.HandleTrigger(4, "The Door knob is missing. I need to find one... maybe in the maintenance room?", null);
+        }
     }
 
     private void OpenAndTeleport()

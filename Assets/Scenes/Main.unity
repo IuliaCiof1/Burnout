@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4.2631555, g: 5.2252717, b: 6.740426, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2520,6 +2520,7 @@ MonoBehaviour:
   doorSound: {fileID: 0}
   playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 1543062743}
+  RequiredKeys: 
   isLocked: 0
 --- !u!65 &81036263
 BoxCollider:
@@ -3762,6 +3763,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138639513}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &143478374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6cc53c1904db39d48ad3cf9eb75868ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 915120369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &145423454
 GameObject:
   m_ObjectHideFlags: 0
@@ -6765,7 +6772,7 @@ Transform:
   m_GameObject: {fileID: 206889443}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 24.164, z: 2.502}
+  m_LocalPosition: {x: 0.35, y: 21.348, z: 1.472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9861,6 +9868,7 @@ MonoBehaviour:
   doorSound: {fileID: 0}
   playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 221564626}
+  RequiredKeys: 
   isLocked: 0
 --- !u!1001 &310983249
 PrefabInstance:
@@ -13721,8 +13729,22 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4100303850794829980, guid: 2a000395d13b7a545873eed3495bf1d5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 800925840}
+    - targetCorrespondingSourceObject: {fileID: 4100303850794829980, guid: 2a000395d13b7a545873eed3495bf1d5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 800925839}
   m_SourcePrefab: {fileID: 100100000, guid: 2a000395d13b7a545873eed3495bf1d5, type: 3}
+--- !u!1 &464018000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4100303850794829980, guid: 2a000395d13b7a545873eed3495bf1d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 464017999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &477652137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14238,7 +14260,7 @@ Transform:
   m_GameObject: {fileID: 499905029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.177, z: 0}
   m_LocalScale: {x: 0.5432706, y: 0.8706679, z: 0.5432706}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21621,6 +21643,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 464017999}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &800925839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464018000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4c981f85b4d5a40a68fb93151c264c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyId: 1
+--- !u!65 &800925840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464018000}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0003519101, y: 0.0021359702, z: 0.0003519201}
+  m_Center: {x: 0.0021026146, y: 0.000363865, z: -0.000000014780658}
 --- !u!1 &803298762
 GameObject:
   m_ObjectHideFlags: 0
@@ -24675,7 +24731,19 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1452494845}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6cc53c1904db39d48ad3cf9eb75868ff,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915120373}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6cc53c1904db39d48ad3cf9eb75868ff,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915120372}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6cc53c1904db39d48ad3cf9eb75868ff,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915120371}
   m_SourcePrefab: {fileID: 100100000, guid: 6cc53c1904db39d48ad3cf9eb75868ff, type: 3}
 --- !u!4 &915120370 stripped
 Transform:
@@ -24683,6 +24751,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 915120369}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &915120371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143478374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4c981f85b4d5a40a68fb93151c264c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyId: 3
+--- !u!114 &915120372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143478374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52661e150e987564ea6511ce78c86c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+--- !u!65 &915120373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143478374}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &916487541
 GameObject:
   m_ObjectHideFlags: 0
@@ -25023,6 +25138,7 @@ MonoBehaviour:
   doorSound: {fileID: 0}
   playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 1652646074}
+  RequiredKeys: 01000000
   isLocked: 0
 --- !u!65 &923928295
 BoxCollider:
@@ -56428,6 +56544,7 @@ MonoBehaviour:
   doorSound: {fileID: 0}
   playerManager: {fileID: 1814899146}
   spawnPoint: {fileID: 916487542}
+  RequiredKeys: 
   isLocked: 0
 --- !u!65 &2095819095
 BoxCollider:

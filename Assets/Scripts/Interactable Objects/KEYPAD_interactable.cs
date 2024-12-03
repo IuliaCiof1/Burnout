@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class KEYPAD_interactable : MonoBehaviour, IInteractable
 {

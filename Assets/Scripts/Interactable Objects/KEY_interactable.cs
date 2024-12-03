@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KEY_interactable : MonoBehaviour, IInteractable
 {
     public int KeyId;
+
     public void Interact()
     {
-        Debug.Log("You picked a key");
+        GlobalStateManager.AddKey(KeyId);
+        Debug.Log($"Key {KeyId} collected. Current keys: {string.Join(", ", GlobalStateManager.CollectedKeys)}");
         Destroy(gameObject);
     }
 }
