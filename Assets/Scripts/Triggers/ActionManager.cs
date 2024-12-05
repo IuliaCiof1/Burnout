@@ -27,7 +27,7 @@ public class ActionManager : MonoBehaviour
 
 
 
-    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound, List<GameObject> triggerObjects = null)
+    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound=null, List<GameObject> triggerObjects = null)
     {
 
         switch (triggerID)
@@ -42,7 +42,7 @@ public class ActionManager : MonoBehaviour
                 PlaySoundEffect();
                 break;
             case 4:
-                DoorIsClosed(dialogText , Sound);
+                DoorIsClosed(dialogText, Sound);
                 break;
             case 5:
                 PlayDoorAudio();
@@ -102,7 +102,11 @@ public class ActionManager : MonoBehaviour
     private void DoorIsClosed(string dialog, AudioClip sound)
     {
         StartDialogue(dialog);
-        SoundFXManager.instance.PlaySoundFXClip(sound, transform, 1f);
+
+        if (sound != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(sound, transform, 1f);
+        }
     }
 
 }

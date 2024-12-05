@@ -34,7 +34,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
         }
         else
         {
-            ActionManager.Instance.HandleTrigger(4, "The Door knob is missing. I need to find one... maybe in the maintenance room?", null);
+            ActionManager.Instance.HandleTrigger(4, "The Door knob is missing. I need to find one... maybe in the maintenance room?");
         }
     }
 
