@@ -18,7 +18,7 @@ public class MonitorCursor : MonoBehaviour
     void Update()
     {
 
-        if (MONITOR_Interactable.isSitting)
+        if (CPY_MONITOR_Interactable.isSitting)
         {
 
             Cursor.visible = false;

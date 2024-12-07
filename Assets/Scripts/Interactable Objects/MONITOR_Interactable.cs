@@ -76,6 +76,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         isSitting = true;
 
         oldPlayerPos = player.transform.position;
+        
         playerController.enabled = false;
 
         Sequence sequence = DOTween.Sequence();
@@ -93,8 +94,6 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     {
         isSitting = false;
 
-        // Disable player control initially
-        playerController.enabled = true;
 
         // Start a DOTween sequence
         Sequence sequence = DOTween.Sequence();
@@ -113,14 +112,21 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
                
 
                 // Step 5: Re-enable player control after the sequence completes
-                .Append(player.transform.DOLocalRotateQuaternion(Quaternion.identity, duration));
+                .Append(player.transform.DOLocalRotateQuaternion(Quaternion.identity, duration)).onComplete = RestartPlayerPos;
 
-        // Unlock the cursor for interaction
-        Cursor.lockState = CursorLockMode.None;
+        
         //camera.fieldOfView = fieldOfView;
 
         phone.ShowPhone();
     }
 
+
+    void RestartPlayerPos()
+    {
+        //player.transform.localPosition = Vector3.zero;
+        playerController.enabled = true;
+        // Unlock the cursor for interaction
+        Cursor.lockState = CursorLockMode.None;
+    }
    
 }
