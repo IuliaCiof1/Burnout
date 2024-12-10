@@ -1,8 +1,11 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    #region - Declarations
     public GameObject pauseMenuUI;
     private bool isPaused = false;
     public Controller player;
@@ -10,7 +13,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject VolumeUI;
     [SerializeField] private GameObject MenuUI;
     private bool VolumeSettingOn = false;
+    #endregion
 
+    #region - Events
     private void Start()
     {
         pauseMenuUI.SetActive(false);
@@ -31,7 +36,9 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region - Methods
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
@@ -65,4 +72,5 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Game is quitting...");
     }
+    #endregion
 }

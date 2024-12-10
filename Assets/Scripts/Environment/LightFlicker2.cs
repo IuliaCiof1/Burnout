@@ -8,8 +8,9 @@ public class LightFlicker2 : MonoBehaviour
     public float TurnOffChance;
     [Range(0.025f, 0.25f)]
     public float TurnOffRollInterval;
-
+    public bool canFlicker = true;
     private Light SelfLightComponent;
+    private Coroutine flickerCoroutine;
 
     void Start()
     {
@@ -19,30 +20,50 @@ public class LightFlicker2 : MonoBehaviour
 
     public IEnumerator Flicker()
     {
+
         WaitForSecondsRealtime CheckInterval = new WaitForSecondsRealtime(TurnOffRollInterval);
         while (true)
         {
-            float Randy = Random.Range(0f, 1f);
-            if (Randy < TurnOffChance)
+            if (canFlicker)
             {
-                SelfLightComponent.enabled = true;
+                float Randy = Random.Range(0f, 1f);
+                if (Randy < TurnOffChance)
+                {
+                    SelfLightComponent.enabled = true;
+                }
+                else
+                {
+                    SelfLightComponent.enabled = false;
+                }
+                yield return CheckInterval;
             }
             else
             {
-                SelfLightComponent.enabled = false;
+                SelfLightComponent.enabled = true;
+                break;
             }
-            yield return CheckInterval;
         }
+
     }
 
     public void StopLights()
     {
-        StopAllCoroutines();
+        if (flickerCoroutine != null)
+        {
+            StopCoroutine(flickerCoroutine);
+            flickerCoroutine = null;
+        }
         SelfLightComponent.enabled = false;
     }
+
     public void StartLights()
     {
-        StartCoroutine(Flicker());
+        if (flickerCoroutine != null)
+        {
+            StopCoroutine(flickerCoroutine);
+        }
+
         SelfLightComponent.enabled = true;
+        flickerCoroutine = StartCoroutine(Flicker());
     }
 }

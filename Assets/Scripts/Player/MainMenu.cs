@@ -2,11 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEditor;
 
 public class MainMenu : MonoBehaviour
 {
     public Image fadeImage;
-    public float fadeDuration = 1f; 
+    public float fadeDuration = 1f;
+    [SerializeField] private GameObject VolumeUI;
+    [SerializeField] private GameObject MenuUI;
 
     public void Play()
     {
@@ -21,7 +24,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
 #endif
     }
-
     private IEnumerator FadeOutAndLoadScene(string sceneName)
     {
         fadeImage.gameObject.SetActive(true);
@@ -39,5 +41,11 @@ public class MainMenu : MonoBehaviour
         }
 
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ToggleVolumeMenu(bool showVolume)
+    {
+        VolumeUI.SetActive(showVolume);
+        MenuUI.SetActive(!showVolume);
     }
 }
