@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LightFlicker2 : MonoBehaviour
@@ -10,18 +9,19 @@ public class LightFlicker2 : MonoBehaviour
     public float TurnOffRollInterval;
     public bool canFlicker = true;
     private Light SelfLightComponent;
+
     private Coroutine flickerCoroutine;
 
     void Start()
     {
         SelfLightComponent = gameObject.GetComponent<Light>();
-        StartCoroutine(Flicker());
+        flickerCoroutine = StartCoroutine(Flicker());
     }
 
     public IEnumerator Flicker()
     {
-
         WaitForSecondsRealtime CheckInterval = new WaitForSecondsRealtime(TurnOffRollInterval);
+
         while (true)
         {
             if (canFlicker)
@@ -35,15 +35,9 @@ public class LightFlicker2 : MonoBehaviour
                 {
                     SelfLightComponent.enabled = false;
                 }
-                yield return CheckInterval;
             }
-            else
-            {
-                SelfLightComponent.enabled = true;
-                break;
-            }
+            yield return CheckInterval;
         }
-
     }
 
     public void StopLights()
@@ -53,17 +47,21 @@ public class LightFlicker2 : MonoBehaviour
             StopCoroutine(flickerCoroutine);
             flickerCoroutine = null;
         }
-        SelfLightComponent.enabled = false;
+        SelfLightComponent.enabled = true; // Ensure light stays on
     }
 
-    public void StartLights()
+    public void StartFlickering()
     {
-        if (flickerCoroutine != null)
+        if (flickerCoroutine == null)
         {
-            StopCoroutine(flickerCoroutine);
+            flickerCoroutine = StartCoroutine(Flicker());
         }
+        canFlicker = true; // Enable flickering
+    }
 
-        SelfLightComponent.enabled = true;
-        flickerCoroutine = StartCoroutine(Flicker());
+    public void TurnOffLight()
+    {
+        canFlicker = false; // Stop flickering
+        SelfLightComponent.enabled = false; // Ensure light is off
     }
 }

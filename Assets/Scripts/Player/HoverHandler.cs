@@ -10,12 +10,7 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (lightFlicker != null)
         {
             Debug.Log("Mouse Hovered Over: " + gameObject.name);
-            lightFlicker.canFlicker = false;
-            lightFlicker.StartLights();
-        }
-        else
-        {
-            Debug.LogWarning("LightFlicker2 reference is missing!");
+            lightFlicker.StopLights();
         }
     }
 
@@ -24,12 +19,8 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (lightFlicker != null)
         {
             Debug.Log("Mouse Left: " + gameObject.name);
-            lightFlicker.canFlicker = true;
-            lightFlicker.StopLights();
-        }
-        else
-        {
-            Debug.LogWarning("LightFlicker2 reference is missing!");
+            lightFlicker.TurnOffLight();
+            lightFlicker.StartFlickering();
         }
     }
 }
