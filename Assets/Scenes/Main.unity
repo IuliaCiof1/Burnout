@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4.2631555, g: 5.2252717, b: 6.740426, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20132,6 +20132,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658651064936380328, guid: 7f2516c4bc43a9b47b1bc9f5aa485e7d,
+        type: 3}
+      propertyPath: isLocked
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46176,8 +46181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c622902ab45a9754085916b14d610acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Hello
-  sound: {fileID: 0}
+  description: Hello?
+  sound: {fileID: 8300000, guid: 444e25f29af93264a968ab0dee1342c8, type: 3}
 --- !u!65 &1735275960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46197,8 +46202,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.738039, y: 2.6660786, z: 5.61683}
-  m_Center: {x: -0.6309805, y: -0.33303928, z: -0.9326973}
+  m_Size: {x: 5.0581207, y: 2.6660786, z: 5.61683}
+  m_Center: {x: 1.5290573, y: -0.33303928, z: -0.9327}
 --- !u!1 &1735964548
 GameObject:
   m_ObjectHideFlags: 0
@@ -48815,8 +48820,15 @@ MonoBehaviour:
   standHeight: 2
   isMoving: 0
   canMove: 1
+  Footstep:
+  - {fileID: 8300000, guid: 8be2a478d05ad864992a94a46cc125f2, type: 3}
+  - {fileID: 8300000, guid: d8076315750bbca47a51895dd7c6140e, type: 3}
+  - {fileID: 8300000, guid: 7ce62a805b859584687ac9857efb74a1, type: 3}
+  - {fileID: 8300000, guid: d217300ec5a2c824fa139b2d0858ac5a, type: 3}
+  - {fileID: 8300000, guid: 91c2ae30b00cd254c897d9a2aedf7b2a, type: 3}
   lookSpeed: 2
   lookXLimit: 80
+  footstepDistance: 1
 --- !u!143 &1814899145
 CharacterController:
   m_ObjectHideFlags: 0
@@ -55937,6 +55949,36 @@ PrefabInstance:
       propertyPath: spookyMailDelay
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8be2a478d05ad864992a94a46cc125f2, type: 3}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d8076315750bbca47a51895dd7c6140e, type: 3}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7ce62a805b859584687ac9857efb74a1, type: 3}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: d217300ec5a2c824fa139b2d0858ac5a, type: 3}
+    - target: {fileID: 5508899039520476223, guid: ed4557a13e654904cb63cc66f89fb663,
+        type: 3}
+      propertyPath: KeyStroke.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 91c2ae30b00cd254c897d9a2aedf7b2a, type: 3}
     - target: {fileID: 6396039317821373377, guid: ed4557a13e654904cb63cc66f89fb663,
         type: 3}
       propertyPath: m_TagString

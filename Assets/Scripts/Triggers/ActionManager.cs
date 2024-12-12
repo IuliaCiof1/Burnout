@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEditor.Rendering;
+using Unity.VisualScripting;
 
 public class ActionManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class ActionManager : MonoBehaviour
         {
             case 1:
                 StartDialogue(dialogText);
+                SoundFXManager.instance.PlaySoundFXClip(Sound, transform, 1f);
                 break;
             case 2:
                 ShowScaryObject(triggerObjects);

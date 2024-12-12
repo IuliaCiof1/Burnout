@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -21,6 +22,8 @@ public class Controller : MonoBehaviour
 
     public bool isMoving = false;
     public bool canMove = true; // Pentru cinematic-uri pe asta il setam pe false
+
+    public AudioClip[] Footstep;
     #endregion
 
     #region - Camera
@@ -29,6 +32,11 @@ public class Controller : MonoBehaviour
 
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
+
+    private Vector3 previousPosition;
+    private float accumulatedDistance = 0f;
+    public float footstepDistance = 1.0f;
+
     #endregion
 
     CharacterController characterController;
@@ -50,6 +58,8 @@ public class Controller : MonoBehaviour
 
     void HandleMovement()
     {
+        
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -77,6 +87,21 @@ public class Controller : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
+        PlayFootstepSound();
+    }
+
+    void PlayFootstepSound()
+    {
+        float distanceMoved = Vector3.Distance(previousPosition, transform.position);
+        accumulatedDistance += distanceMoved;
+
+        if (accumulatedDistance >= footstepDistance && isMoving && characterController.isGrounded)
+        {
+            SoundFXManager.instance.PlaySoundFXClips(Footstep, transform, 1f);
+            accumulatedDistance = 0f;
+        }
+
+        previousPosition = transform.position;
     }
 
     void HandleRotation()

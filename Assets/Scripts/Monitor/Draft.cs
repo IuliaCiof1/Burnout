@@ -17,6 +17,8 @@ public class Draft : MonoBehaviour
 
     [SerializeField] [TextArea] string dialogText;
     bool dialogFinished;
+    public AudioClip[] KeyStroke;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class Draft : MonoBehaviour
     {
         if (textArea.gameObject.activeInHierarchy && Input.anyKeyDown)
         {
-            //ignore mouse clicks
+            
             if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse1))
             {
                 return;
@@ -37,6 +39,8 @@ public class Draft : MonoBehaviour
             {
                 if (index < textToWrite.Length - 1)
                 {
+                    SoundFXManager.instance.PlaySoundFXClips(KeyStroke, transform, 1f);
+
                     textArea.text += textToWrite[index];
                     index++;
 
