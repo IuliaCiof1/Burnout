@@ -98,7 +98,13 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
         if (playerCamera != null)
         {
             playerCamera.DOMove(originalCameraPosition, cameraMoveDuration);
-            playerCamera.DORotateQuaternion(originalCameraRotation, cameraMoveDuration);
+            playerCamera.DORotateQuaternion(originalCameraRotation, cameraMoveDuration).OnComplete(()=> {
+                if (playerMovementScript != null)
+                {
+                    playerMovementScript.SetMovement(true);
+                }
+            });
+            
         }
 
         if (keypadUI != null)
@@ -106,10 +112,7 @@ public class KEYPAD_interactable : MonoBehaviour, IInteractable
             keypadUI.SetActive(false);
         }
 
-        if (playerMovementScript != null)
-        {
-            playerMovementScript.SetMovement(true);
-        }
+       
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
