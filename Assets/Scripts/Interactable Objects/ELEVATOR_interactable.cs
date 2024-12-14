@@ -14,6 +14,7 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        print(player.name);
         restrictingCollider.enabled = false;
     }
 

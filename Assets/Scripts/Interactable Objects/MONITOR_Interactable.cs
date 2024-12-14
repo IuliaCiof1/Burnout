@@ -10,28 +10,29 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     [SerializeField] float duration;
     [SerializeField] Transform lookAtPoint;
     [SerializeField] Transform rotateToSitPoint;
+    [SerializeField] Transform chair;
     [SerializeField] Controller playerController;
     Camera camera;
 
-    Vector3 oldPlayerPos;
-    //Vector3 oldPlayerPos;
     float fieldOfView;
 
     public static bool isSitting;
+    private bool isAtChair;
 
     [SerializeField] private Phone phone;
-
+    Sequence sequence;
 
     private Animator animator;
+    private Quaternion lastCameraRotation;
 
-    private void Awake()
+    private void Start()
     {
-        //animator = player.GetComponentInChildren<Animator>();
+        animator = player.GetComponentInChildren<Animator>();
 
         camera = Camera.main;
         fieldOfView = camera.fieldOfView;
         StartState();
-
+        //SitAtComputer();
     }
 
     public void Interact()
@@ -53,80 +54,119 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void StartState()
     {
-        print("first");
-        isSitting = true;
-        //animator.SetBool("isSitting", true);
-        oldPlayerPos = player.transform.position;
+        lastCameraRotation = Quaternion.identity;
+        phone.HidePhone();
+        playerController.canMove = false;
         playerController.enabled = false;
+        isSitting = true;
 
-        Sequence sequence = DOTween.Sequence();
+        sequence = DOTween.Sequence();   //Start DOTween sequence
 
-        // Move the player to the sit position, then rotate the player to face the monitor
-        player.transform.LookAt(rotateToSitPoint.position);
-        player.transform.position = monitorCamera.position;
-        // After the player is positioned, rotate the camera to look at the monitor
-        camera.transform.LookAt(lookAtPoint.position);
-        camera.fieldOfView = monitorCamera.GetComponent<Camera>().fieldOfView;
+        // Calculate the duration based on the player's speed
+        float distance = Vector3.Distance(player.transform.position, monitorCamera.position);
+        float durationMove = distance / 1.5f;
+
+
+        sequence
+            .Append(player.transform.DOMove(monitorCamera.position, 0))  //Move player to chair
+                                                                         //Trigger the walking animation
+            .AppendCallback(() => { animator.Play("Sit", 0, 2); })          //Trigger the sit down animation
+            .Append(player.transform.DOLookAt(rotateToSitPoint.position, 0, AxisConstraint.Y)) //rotate player to sitting rotation
+            .AppendCallback(() => { player.transform.parent = chair; })              //parent player to chair
+            .Append(chair.transform.DOLookAt(lookAtPoint.position, 0, AxisConstraint.Y)) // Rotate the chair after the animation finishes
+            .Join(player.transform.GetChild(0).DOLocalMove(new Vector3(0, -0.7920046f, 0), 0)) //Resets the position otherwise things get messy
+            .Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, 0));  //changes the fieldof view to zoom in on computer
+
+        camera.gameObject.transform.localEulerAngles = new Vector3(340.845215f, 12.969347f, 351.18396f); //Look at computer
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void SitAtComputer()
     {
+        lastCameraRotation = camera.gameObject.transform.localRotation;
+        print(lastCameraRotation);
         phone.HidePhone();
-
+        playerController.canMove = false;
+        playerController.enabled = false;
         isSitting = true;
 
-        oldPlayerPos = player.transform.position;
-        
-        playerController.enabled = false;
+        sequence = DOTween.Sequence();   //Start DOTween sequence
 
-        Sequence sequence = DOTween.Sequence();
-        //animator.SetBool("isSitting", true);
-        // Move the player to the sit position, then rotate the player to face the monitor
-        sequence.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration)).Append(player.transform.DOMove(monitorCamera.position, duration)).Append(camera.transform.DOLookAt(lookAtPoint.position, duration))
-            
-                // After the player is positioned, rotate the camera to look at the monitor
-                
-                .Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration));
-        
+        // Calculate the duration based on the player's speed
+        float distance = Vector3.Distance(player.transform.position, monitorCamera.position);
+        float durationMove = distance / 1.5f;
+
+
+        sequence
+            .Append(player.transform.DOMove(monitorCamera.position, durationMove))  //Move player to chair
+            .JoinCallback(() => { PlayAnimation(); })                                //Trigger the walking animation
+            .AppendCallback(() => { animator.SetBool("isAtChair", true); })          //Trigger the sit down animation
+            .Append(player.transform.DOLookAt(rotateToSitPoint.position, duration, AxisConstraint.Y)) //rotate player to sitting rotation
+            .AppendCallback(() => { player.transform.parent = chair; })              //parent player to chair
+            .AppendInterval(1f)                                                     //wait until animation finishes
+            .Append(chair.transform.DOLookAt(lookAtPoint.position, duration, AxisConstraint.Y)) // Rotate the chair after the animation finishes
+            .Join(camera.transform.DOLookAt(lookAtPoint.position, duration))       //Look at computer
+            .Join(player.transform.GetChild(0).DOLocalMove(new Vector3(0, -0.7920046f, 0), 2)) //Resets the position otherwise things get messy
+            .Join(camera.DOFieldOfView(monitorCamera.GetComponent<Camera>().fieldOfView, duration));  //changes the fieldof view to zoom in on computer
+
+        Cursor.lockState = CursorLockMode.None;
     }
+
+    void PlayAnimation()
+    {
+        // Trigger the sitting animation
+        animator.SetBool("isSitting", isSitting);
+    }
+
 
     void GetUp()
     {
         isSitting = false;
-
-
-        // Start a DOTween sequence
+ 
         Sequence sequence = DOTween.Sequence();
-        //animator.SetBool("isSitting", false);
-        // Step 1: Temporarily unparent camera to change its field of view independently
-        //camera.transform.SetParent(null, true);
 
-        // Step 2: Apply field of view change while the camera is detached
-        sequence.Append(camera.DOFieldOfView(fieldOfView, duration))
+        float distance = Vector3.Distance(player.transform.position, monitorCamera.position);
+        float durationMove = distance / 1.5f;
 
-                // Step 3: Reparent the camera to the player so it moves along with the player
-                //.AppendCallback(() => camera.transform.SetParent(player.transform, true))
+        sequence
+            .Join(camera.DOFieldOfView(fieldOfView, duration))
+            .Append(chair.transform.DOLookAt(rotateToSitPoint.position, duration, AxisConstraint.Y))
+            .AppendCallback(() =>
+            {
+                //playerController.GetComponent<CharacterController>().enabled = false;
 
-                // Step 4: Move the player to the sit position and rotate to face the monitor
-                .Append(player.transform.DOMove(oldPlayerPos, duration))
-               
+                //  float posY = playerController.transform.localPosition.y;
+                // playerController.transform.localPosition = new Vector3(camera.gameObject.transform.position.x, posY, camera.gameObject.transform.position.z);
 
-                // Step 5: Re-enable player control after the sequence completes
-                .Append(player.transform.DOLocalRotateQuaternion(Quaternion.identity, duration)).onComplete = RestartPlayerPos;
+                // playerController.GetComponent<CharacterController>().enabled = true;
 
-        
-        //camera.fieldOfView = fieldOfView;
+                player.transform.parent = playerController.transform;
 
-        phone.ShowPhone();
+            })
+             //.Append(player.transform.DOLookAt(rotateToSitPoint.position, duration, AxisConstraint.Y))
+
+
+             .JoinCallback(() =>
+             {
+                 PlayAnimation();
+                 phone.ShowPhone();
+             })
+
+
+             .AppendInterval(2f)
+             .Append(player.transform.DOLocalMove(new Vector3(0, 0, 0), 1))
+             .Join(player.transform.GetChild(0).DOLocalMove(new Vector3(0, -0.7920046f, 0), 1.5f))
+             .Append(player.transform.DOLocalRotateQuaternion(Quaternion.identity, duration))
+             .Join(camera.gameObject.transform.DOLocalRotateQuaternion(lastCameraRotation, duration))
+             
+             .AppendCallback(() =>
+             {
+                 playerController.enabled = true;
+                 playerController.canMove = true;
+             });
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-
-    void RestartPlayerPos()
-    {
-        //player.transform.localPosition = Vector3.zero;
-        playerController.enabled = true;
-        // Unlock the cursor for interaction
-        Cursor.lockState = CursorLockMode.None;
-    }
-   
 }

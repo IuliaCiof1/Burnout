@@ -21,6 +21,7 @@ public class Controller : MonoBehaviour
     public float standHeight = 2f;
 
     public bool isMoving = false;
+    bool isRunning = false;
     public bool canMove = true; // Pentru cinematic-uri pe asta il setam pe false
 
     public AudioClip[] Footstep;
@@ -39,6 +40,12 @@ public class Controller : MonoBehaviour
 
     #endregion
 
+
+    #region - Animation
+    [SerializeField] private Animator animator;
+    #endregion
+
+
     CharacterController characterController;
     #endregion
 
@@ -54,6 +61,20 @@ public class Controller : MonoBehaviour
         HandleMovement();
         HandleRotation();
         HandleCrouch();
+
+        HandleAnimation();
+    }
+
+
+    void HandleAnimation()
+    {
+        animator.SetBool("isMoving", isMoving);
+        if (isRunning)
+        {
+            animator.speed = 1.5f;
+        }
+        else
+            animator.speed = 1f;
     }
 
     void HandleMovement()
@@ -64,7 +85,7 @@ public class Controller : MonoBehaviour
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         // Press Left Shift to run
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
