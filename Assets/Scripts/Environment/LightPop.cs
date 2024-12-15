@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LightbulbScript : MonoBehaviour
 {
-    [SerializeField] public AudioClip LightPopAudio;
+    [SerializeField] public AudioClip[] LightPopAudio;
     public Light lightSource;
     public float triggerDistance = 5f;
     public Transform player;
@@ -58,7 +58,7 @@ public class LightbulbScript : MonoBehaviour
 
     private void PopLight()
     {
-        SoundFXManager.instance.PlaySoundFXClip(LightPopAudio, transform, 1f);
+        SoundFXManager.instance.PlaySoundFXClips(LightPopAudio, transform, 1f);
         lightSource.enabled = false;
         isLightOff = true; // Ensure the light stays off permanently
     }

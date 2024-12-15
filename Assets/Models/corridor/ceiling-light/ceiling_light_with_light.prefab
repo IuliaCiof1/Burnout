@@ -98,7 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7040e1eba3b0f4bbc8c317b4fdca1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightPopAudio: {fileID: 8300000, guid: bf3519449573abe49aad3e41e5bfdcf7, type: 3}
+  LightPopAudio:
+  - {fileID: 8300000, guid: 5d511d988bfc2cd4cb8ba1f1c307c35b, type: 3}
+  - {fileID: 8300000, guid: bf3519449573abe49aad3e41e5bfdcf7, type: 3}
+  - {fileID: 8300000, guid: ef6341f663d6d0d46a094cd9fbf2b600, type: 3}
+  - {fileID: 8300000, guid: 8d5c605d9b067494da2e758c189193cf, type: 3}
   lightSource: {fileID: 7104918102607896630}
   triggerDistance: 5
   player: {fileID: 0}
