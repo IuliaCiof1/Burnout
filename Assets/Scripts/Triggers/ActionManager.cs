@@ -28,14 +28,15 @@ public class ActionManager : MonoBehaviour
 
 
 
-    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound=null, List<GameObject> triggerObjects = null)
+    public void HandleTrigger(int triggerID, string dialogText, AudioClip Sound = null, List<GameObject> triggerObjects = null)
     {
 
         switch (triggerID)
         {
             case 1:
                 StartDialogue(dialogText);
-                SoundFXManager.instance.PlaySoundFXClip(Sound, transform, 1f);
+                if (Sound != null)
+                    SoundFXManager.instance.PlaySoundFXClip(Sound, transform, 1f);
                 break;
             case 2:
                 ShowScaryObject(triggerObjects);
