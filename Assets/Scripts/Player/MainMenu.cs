@@ -11,6 +11,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject VolumeUI;
     [SerializeField] private GameObject MenuUI;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void Play()
     {
         StartCoroutine(FadeOutAndLoadScene("Main"));

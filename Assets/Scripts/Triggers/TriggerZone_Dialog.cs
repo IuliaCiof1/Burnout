@@ -7,7 +7,6 @@ public class TriggerZone_Dialog : TriggerZone
 
     public override void Trigger()
     {
-        print("trigger dialog");
         triggerID = 1;
         ActionManager.Instance.HandleTrigger(triggerID, description, sound, null);
     }

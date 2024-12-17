@@ -118,20 +118,22 @@ public class MonsterAI : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Found You");
-            agent.isStopped = true;
-
-            //Controller playerController = player.GetComponent<Controller>();
-            playerController.canMove = false;
-
-            TriggerScreamer();
-        }
+        TriggerScreamer(other);
     }
 
-    void TriggerScreamer()
+    public void TriggerScreamer(Collider other = null)
     {
+        if (other.CompareTag("Player"))
+        {
+            agent.isStopped = true;
+            playerController.canMove = false;
+        }
         Debug.Log("Screamer activated!");
+    }
+    //
+    public void EndGameCinematic()
+    {
+        agent.isStopped = true;
+        playerController.canMove = false;
     }
 }
