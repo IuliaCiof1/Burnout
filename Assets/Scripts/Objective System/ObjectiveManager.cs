@@ -13,6 +13,7 @@ public class ObjectiveManager : MonoBehaviour
     [Header(header: "Objectives UI")]
     [SerializeField] GameObject objectivePrefab;
     [SerializeField] Transform objectiveContainer;
+    TMP_Text description;
 
     private void OnEnable()
     {
@@ -31,7 +32,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void HandleObjectiveCompleted(Objective completedObjective)
     {
-        //Debug.Log("handle objective completed");
+        description.text = "<s>" + description.text;
         completedObjective.DeactivateObjective(); // Clean up
         currentObjectiveIndex++;
 
@@ -62,7 +63,7 @@ public class ObjectiveManager : MonoBehaviour
         objectiveUI.transform.SetAsFirstSibling();
 
 
-        TMP_Text description =  objectiveUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        description =  objectiveUI.transform.GetChild(0).GetComponent<TMP_Text>();
         description.text = objective.description;
     }
 

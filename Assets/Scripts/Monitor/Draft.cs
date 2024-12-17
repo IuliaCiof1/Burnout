@@ -64,7 +64,7 @@ public class Draft : MonoBehaviour
             ObjectiveEvents.SendEmail();
 
             ObjectiveEvents.OnSpookyEmailSent += SendSpookyMail;
-            draftMail.SetActive(false);
+            //draftMail.SetActive(false);
             print("aaaa1");
             //ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
 
@@ -83,6 +83,7 @@ public class Draft : MonoBehaviour
     {
         print("aaaaaa");
         StartCoroutine(Delay());
+        draftMail.SetActive(false);
     }
 
     IEnumerator Delay()
