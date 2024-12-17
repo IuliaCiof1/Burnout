@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour
     public bool isMoving = false;
     bool isRunning = false;
     public bool canMove = true; // Pentru cinematic-uri pe asta il setam pe false
+    private bool canJump = true;
 
     public AudioClip[] Footstep;
     #endregion
@@ -79,7 +80,7 @@ public class Controller : MonoBehaviour
 
     void HandleMovement()
     {
-        
+
 
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -94,7 +95,7 @@ public class Controller : MonoBehaviour
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded && canJump)
         {
             moveDirection.y = jumpPower;
         }
@@ -142,11 +143,30 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
+            bool isObstacleAbove = Physics.Raycast(
+                transform.position,
+                Vector3.up,
+                characterController.height / 2 + 3f
+            );
+
+            if (isCrouching && isObstacleAbove)
+            {
+                Debug.Log("Cannot stand up! Obstacle above.");
+                return;
+            }
+
             isCrouching = !isCrouching;
+
             if (isCrouching)
+            {
                 characterController.height = crouchHeight;
+                canJump = false;
+            }
             else
+            {
                 characterController.height = standHeight;
+                canJump = true;
+            }
         }
     }
 
