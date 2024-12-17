@@ -23,8 +23,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 
         if (spawnPoint == null || playerManager == null)
         {
-            Debug.LogError("SpawnPoint or PlayerManager is not set! Please assign valid references.");
-            return;
+             return;
         }
         bool hasAllKeys = RequiredKeys.TrueForAll(key => GlobalStateManager.HasKey(key));
 
@@ -40,7 +39,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 
     private void OpenAndTeleport()
     {
-        if (!isLocked)
+        if (!isLocked && spawnPoint != null)
         {
             isInteracting = true;
 
@@ -62,7 +61,7 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
 
     private void TeleportPlayer()
     {
-         Collider playerCollider = playerManager.GetComponentInChildren<Collider>();
+        Collider playerCollider = playerManager.GetComponentInChildren<Collider>();
         if (playerCollider != null)
         {
             playerCollider.enabled = false;
