@@ -23,7 +23,7 @@ public class PHONE_interactable : MonoBehaviour, IInteractable
         phoneInHand.IsCollected = true;
         phoneInHand.ShowPhone();
         SoundFXManager.instance.PlaySoundFXClip(PickUpSoundFX, transform, 1f);
-        ObjectiveEvents.SendSpookyEmail();
+        //ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a Phone");
     }
