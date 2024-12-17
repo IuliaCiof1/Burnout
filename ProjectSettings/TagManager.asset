@@ -8,6 +8,7 @@ TagManager:
   - CockRoach
   - PlayerManager
   - Obstacle
+  - SpookyMail
   layers:
   - Default
   - TransparentFX

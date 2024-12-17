@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023c0f79b1567aa479b2d39500f8758a, type: 3}
+  m_Script: {fileID: 11500000, guid: e5724aad445c285469090b50a6bf6913, type: 3}
   m_Name: OBJ_OpenSpookyMail
   m_EditorClassIdentifier: 
   description: Open the new mail you received

@@ -22,6 +22,7 @@ public class Draft : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ObjectiveEvents.OnEmailSent += SendSpookyMail;
         index = 0;
     }
 
@@ -63,8 +64,8 @@ public class Draft : MonoBehaviour
         {
             ObjectiveEvents.SendEmail();
 
-            ObjectiveEvents.OnSpookyEmailSent += SendSpookyMail;
-            //draftMail.SetActive(false);
+            //ObjectiveEvents.OnSpookyEmailSent += SendSpookyMail;
+            draftMail.SetActive(false);
             print("aaaa1");
             //ObjectiveEvents.OnOpenSpookyMail += SendSpookyMail;
 
@@ -83,14 +84,14 @@ public class Draft : MonoBehaviour
     {
         print("aaaaaa");
         StartCoroutine(Delay());
-        draftMail.SetActive(false);
+        
     }
 
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(spookyMailDelay);
         spookyMail.SetActive(true);
-        ObjectiveEvents.OnSpookyEmailSent -= SendSpookyMail;
+        //ObjectiveEvents.OnSpookyEmailSent -= SendSpookyMail;
 
     }
 }

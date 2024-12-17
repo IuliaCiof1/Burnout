@@ -42,12 +42,20 @@ public class DisplayMailContent : MonoBehaviour
         GameObject mailContent = mail.transform.GetChild(1).gameObject;
         mailContent.SetActive(true);
         mailContent.transform.position = contentMailPosition.transform.position;
+
+  
     }
 
 
     public void ReadMail(GameObject mail, GameObject  unreadIcon)
     {
         unreadIcon.SetActive(false);
+        print(mail.name);
+        if (mail.CompareTag("SpookyMail"))
+        {
+            print("aaaaa de ce");
+            ObjectiveEvents.OpenSpookyMail();
+        }
     }
 
 }

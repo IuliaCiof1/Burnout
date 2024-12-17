@@ -35,7 +35,7 @@ public class ObjectiveManager : MonoBehaviour
         description.text = "<s>" + description.text;
         completedObjective.DeactivateObjective(); // Clean up
         currentObjectiveIndex++;
-
+        print("completed quest");
         StartNextObjective();
     }
 
