@@ -29,4 +29,6 @@ public class GlobalStateManager : MonoBehaviour
     {
         return GlobalBooleans.TryGetValue(key, out bool value) && value;
     }
+
+
 }

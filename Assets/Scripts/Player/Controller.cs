@@ -41,11 +41,9 @@ public class Controller : MonoBehaviour
 
     #endregion
 
-
     #region - Animation
     [SerializeField] private Animator animator;
     #endregion
-
 
     CharacterController characterController;
     #endregion

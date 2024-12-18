@@ -6,10 +6,10 @@ public class MonsterChaseAI : MonoBehaviour
     public Transform player;
     public float closeRange = 2f;
     public float farRange = 10f;
-    public float baseSpeed = 3f;
-    public float maxSpeed = 6f;
-    public float minSpeed = 1.5f;
-    public float jumpscareRange = 1f;
+    public float baseSpeed = 2.5f;
+    public float maxSpeed = 5.5f;
+    public float minSpeed = 1f;
+    public float jumpscareRange = 3f;
     public bool isChasing = false;
     public NavMeshAgent agent;
     public Controller playerController;

@@ -4,7 +4,12 @@ public class Flashlight : MonoBehaviour
 {
     public Light flashlight;
     public KeyCode toggleKey = KeyCode.F;
+    public KeyCode UVtoggleKey = KeyCode.U;
+
     private bool isOn = false;
+    public bool hasUV = false;
+
+
 
     void Start()
     {
