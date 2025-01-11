@@ -7,8 +7,8 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     #region - Declarations
-
     public Camera playerCamera;
+    CharacterController characterController;
 
     #region - Movement
     public float walkSpeed = 2f;
@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
 
     public bool isCrouching = false;
     public float crouchHeight = 1f;
-    public float standHeight = 2f;
+    public float standHeight = 1.5f;
 
     public bool isMoving = false;
     bool isRunning = false;
@@ -44,8 +44,6 @@ public class Controller : MonoBehaviour
     #region - Animation
     [SerializeField] private Animator animator;
     #endregion
-
-    CharacterController characterController;
     #endregion
 
     #region - Methods
@@ -144,7 +142,7 @@ public class Controller : MonoBehaviour
             bool isObstacleAbove = Physics.Raycast(
                 transform.position,
                 Vector3.up,
-                characterController.height / 2 + 3f
+                characterController.height / 2 + 1f
             );
 
             if (isCrouching && isObstacleAbove)

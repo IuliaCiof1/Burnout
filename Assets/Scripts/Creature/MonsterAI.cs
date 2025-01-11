@@ -4,26 +4,28 @@ using UnityEngine.AI;
 
 public class MonsterAI : MonoBehaviour
 {
+    #region - Declarations
     public float wanderRadius = 10f;
     public float wanderInterval = 5f;
     public float wanderSpeed = 2f;
     public float chaseSpeed = 5f;
-    public float hearingRange = 15f;
-    public float closeRange = 2f;
+    public float hearingRange = 10f;
+    public float closeRange = 3f;
     public float investigateRadius = 3f;
     public float investigateTime = 5f;
-    public float safeDistanceFromPlayer = 1.5f;
+    public float safeDistanceFromPlayer = 2.5f;
     public NavMeshAgent agent;
     public Transform player;
     public Controller playerController;
-
 
     private bool isChasing = false;
     private bool isInvestigating = false;
     private float investigateEndTime = 0f;
     private Vector3 lastHeardPosition;
     private float nextWanderTime = 0f;
+    #endregion
 
+    #region - Methods
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -130,10 +132,11 @@ public class MonsterAI : MonoBehaviour
         }
         Debug.Log("Screamer activated!");
     }
-    //
+
     public void EndGameCinematic()
     {
         agent.isStopped = true;
         playerController.canMove = false;
     }
+    #endregion
 }
