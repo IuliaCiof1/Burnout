@@ -42,7 +42,7 @@ public class ActionManager : MonoBehaviour
                 ShowScaryObject(triggerObjects);
                 break;
             case 3:
-                PlaySoundEffect();
+                PlaySoundEffect(Sound);
                 break;
             case 4:
                 DoorIsClosed(dialogText, Sound);
@@ -92,9 +92,9 @@ public class ActionManager : MonoBehaviour
 
     }
 
-    private void PlaySoundEffect()
+    private void PlaySoundEffect(AudioClip sound)
     {
-        Debug.Log("Playing sound effect...");
+        SoundFXManager.instance.PlaySoundFXClip(sound, transform, 1f);
     }
 
     private void PlayDoorAudio()

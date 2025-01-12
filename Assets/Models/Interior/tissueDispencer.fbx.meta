@@ -3,7 +3,18 @@ guid: 806632bcc4e29c14898d11b5c284ac34
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tissue
+    second: {fileID: 4040257030439521555, guid: f9d0f8f6fa34d6a45ab081252f3b87cc,
+      type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TissueDispencer
+    second: {fileID: 2100000, guid: 1d5c69d2649ce44468cbf16f553d280a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

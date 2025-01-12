@@ -12,6 +12,7 @@ public abstract class Objective : ScriptableObject
 
     protected void Complete()
     {
+        Debug.Log("aaaaaaaaaaaaasd");
         ObjectiveEvents.ObjectiveCompleted(this); // Notify system that this objective is complete
     }
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Objectives/OpenSpookyMail")]
 public class Obj_OpenSpookyMail : Objective
 {
+    public string objectiveEventName;
 
     public override void ActivateObjective()
     {
-        ObjectiveEvents.OnOpenSpookyMail += Complete;
+        ObjectiveEvents.SubscribeEvent(objectiveEventName, Complete);
+        //ObjectiveEvents.OnOpenSpookyMail += Complete;
         Debug.Log("Objective started: " + description);
 
     }
@@ -17,7 +19,8 @@ public class Obj_OpenSpookyMail : Objective
 
     public override void DeactivateObjective()
     {
-        ObjectiveEvents.OnOpenSpookyMail -= Complete;
+        //ObjectiveEvents.OnOpenSpookyMail -= Complete;
+        ObjectiveEvents.UnsubscribeEvent(objectiveEventName, Complete);
         Debug.Log("Objective completed: " + description);
     }
 

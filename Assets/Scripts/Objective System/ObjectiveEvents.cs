@@ -12,10 +12,60 @@ public static class ObjectiveEvents
     //private static event Action OnSpookyEmailRead;
     public static event Action OnOpenSpookyMail;
 
+    private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>
+    {
+        { "OnEmailSent", OnEmailSent},
+        { "OnOpenSpookyMail", OnOpenSpookyMail}
 
-    public static void ObjectiveCompleted(Objective objective) => OnObjectiveCompleted?.Invoke(objective);
+    };
 
-    public static void SendEmail() => OnEmailSent?.Invoke();
+
+    public static void SubscribeEvent(string eventName, Action listener)
+    {
+        
+        if (!eventDictionary.ContainsKey(eventName))
+        {
+            Debug.Log("not in dic");
+            eventDictionary[eventName] = null; // Initialize the event if not present
+        }
+        Debug.Log(eventName+listener.ToString());
+        eventDictionary[eventName] += listener;
+    }
+
+    public static void UnsubscribeEvent(string eventName, Action listener)
+    {
+        if (eventDictionary.ContainsKey(eventName))
+        {
+            eventDictionary[eventName] -= listener;
+
+            if (eventDictionary[eventName] == null)
+            {
+                eventDictionary.Remove(eventName); // Remove the event if no listeners remain
+            }
+        }
+    }
+
+
+    public static void TriggerEvent(string eventName)
+    {
+        if (eventDictionary.ContainsKey(eventName))
+        {
+            eventDictionary[eventName]?.Invoke(); // Invoke the event via the dictionary
+        }
+    }
+
+    public static void ObjectiveCompleted(Objective objective)
+    {
+        Debug.Log("objective completed");
+        OnObjectiveCompleted?.Invoke(objective);
+    }
+
+    public static void SendEmail()
+    {
+        TriggerEvent("OnEmailSent"); //use trigger event makes OnEmailSent invoke succecfully
+        OnEmailSent?.Invoke();
+
+    }
     //public static void SendSpookyEmail() => OnSpookyEmailSent?.Invoke();
     public static void OpenSpookyMail() => OnOpenSpookyMail?.Invoke();
 }
