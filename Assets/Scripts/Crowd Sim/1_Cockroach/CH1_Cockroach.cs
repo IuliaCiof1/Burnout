@@ -59,7 +59,6 @@ public class CH1_Cockroach : MonoBehaviour
         MaintainYPosition();
     }
 
-
     void OnDestroy()
     {
         allCockroaches.Remove(this);
@@ -116,7 +115,7 @@ public class CH1_Cockroach : MonoBehaviour
             direction = (transform.position - player.transform.position).normalized;
         }
     }
-
+    
     public void ApplyFlockingBehavior()
     {
         Vector3 separation = Vector3.zero;
@@ -256,6 +255,5 @@ public class CH1_Cockroach : MonoBehaviour
         CS1_Anim.SetTrigger("anim_Idle");
     }
     #endregion
-
     #endregion
 }

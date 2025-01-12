@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CH1_Moving : State
@@ -19,7 +20,7 @@ public class CH1_Moving : State
 
         if (bug.IsPlayerNearby())
         {
-            if (!bug.isAggresive)
+            if (!bug.isAggresive || GlobalStateManager.HasKey(0))
                 bug.ChangeState(new CH1_Fleeing());
             else
                 bug.ChangeState(new CH1_Attack());

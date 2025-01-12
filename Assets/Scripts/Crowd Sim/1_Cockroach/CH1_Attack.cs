@@ -15,6 +15,12 @@ public class CH1_Attack : State
 
     public override void Update(CH1_Cockroach bug)
     {
+        if (GlobalStateManager.HasKey(0))
+        {
+            bug.ChangeState(new CH1_Moving());
+            return;
+        }
+
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null) return;
 
@@ -43,6 +49,7 @@ public class CH1_Attack : State
 
     public override void Exit(CH1_Cockroach bug)
     {
+
     }
 
     private Vector3 AvoidObstacles(CH1_Cockroach bug, Vector3 targetDirection)
