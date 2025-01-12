@@ -84,11 +84,12 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
 
     void SitAtComputer()
     {
+        playerController.canMove = false;
+        playerController.enabled = false;
         lastCameraRotation = camera.gameObject.transform.localRotation;
         print(lastCameraRotation);
         phone.HidePhone();
-        playerController.canMove = false;
-        playerController.enabled = false;
+       
         isSitting = true;
 
         sequence = DOTween.Sequence();   //Start DOTween sequence

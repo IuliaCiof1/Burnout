@@ -11,6 +11,8 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
     private GameObject player;
     public Collider restrictingCollider;
 
+    [SerializeField] Objective objectiveToComplete;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -20,7 +22,7 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (!isMoving)
+        if (!isMoving && objectiveToComplete.isCompleted)
         {
             StartCoroutine(OpenDoors());
         }
@@ -36,6 +38,8 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
+            ObjectiveEvents.TakeLift();
+
             playerInside = true;
             restrictingCollider.enabled = true;
             StartCoroutine(CloseDoorsAndMove());

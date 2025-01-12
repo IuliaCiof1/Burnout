@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DisplayMailContent : MonoBehaviour
 {
     [SerializeField] private Transform contentMailPosition;
-
+    [SerializeField] private DOOR_Interacting doorToUnlock;
     Vector3 iniPosition;
 
     private void Start()
@@ -54,7 +54,7 @@ public class DisplayMailContent : MonoBehaviour
         if (mail.CompareTag("SpookyMail"))
         {
             print("aaaaa de ce");
-            ObjectiveEvents.OpenSpookyMail();
+            ObjectiveEvents.OpenSpookyMail(doorToUnlock);
         }
     }
 

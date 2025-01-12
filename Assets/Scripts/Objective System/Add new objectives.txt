@@ -1,7 +1,8 @@
 To add new objectives follow these steps:
 
-1. create a new event in ObjectiveEvents
-2. create a new objective script that inherits from Objective class. Example: Obj_SendMail.cs
-3. place the objective logic there and make sure to subscribe and unsubscribe to Complete event with the events you created
-4. add a new scriptable object (Objective -> the class you created)
-5. add the scriptable object to the ObjectiveManager list
+1. In Objectives folder right click->create->objective to add a new scriptable object and add it to the objectives list of ObjectiveManager gameobject
+2. Write the description of the goal and the Objective Event Name (ex: OnCheckOutRoom)
+3. Go to ObjectiveEvents script and write the Objective Event Name from preveous step, in the dictionary.
+4. Add a new public stativ event with the same name
+5. Add a new static function and call TriggerEvent()
+6. to complete the objective  you need to call the above function anywhere in the project (ex: ObjectiveEvents.SendEmail())

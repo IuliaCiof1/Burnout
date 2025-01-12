@@ -5,30 +5,37 @@ using UnityEngine;
 
 public static class ObjectiveEvents
 {
-    public static event Action <Objective> OnObjectiveCompleted;
+    public static event Action<Objective> OnObjectiveCompleted;
 
 
     public static event Action OnEmailSent;
     //private static event Action OnSpookyEmailRead;
     public static event Action OnOpenSpookyMail;
+    public static event Action OnCheckOutRoom;
+    public static event Action OnTakeLift;
+
+
+
 
     private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>
     {
         { "OnEmailSent", OnEmailSent},
-        { "OnOpenSpookyMail", OnOpenSpookyMail}
+        { "OnOpenSpookyMail", OnOpenSpookyMail},
+        {"OnCheckOutRoom", OnCheckOutRoom },
+        {"OnTakeLift", OnTakeLift }
 
     };
 
 
     public static void SubscribeEvent(string eventName, Action listener)
     {
-        
+
         if (!eventDictionary.ContainsKey(eventName))
         {
             Debug.Log("not in dic");
             eventDictionary[eventName] = null; // Initialize the event if not present
         }
-        Debug.Log(eventName+listener.ToString());
+        Debug.Log(eventName + listener.ToString());
         eventDictionary[eventName] += listener;
     }
 
@@ -67,5 +74,22 @@ public static class ObjectiveEvents
 
     }
     //public static void SendSpookyEmail() => OnSpookyEmailSent?.Invoke();
-    public static void OpenSpookyMail() => OnOpenSpookyMail?.Invoke();
+    //public static void OpenSpookyMail() => OnOpenSpookyMail?.Invoke();
+    public static void OpenSpookyMail(DOOR_Interacting doorToUnlock)
+    {
+        doorToUnlock.isLocked = false;
+        TriggerEvent("OnOpenSpookyMail");
+
+    }
+
+    public static void CheckOutRoom()
+    {
+       
+        TriggerEvent("OnCheckOutRoom");
+    }
+
+    public static void TakeLift()
+    {
+        TriggerEvent("OnTakeLift");
+    }
 }
