@@ -6,19 +6,45 @@ public class EndChaseTrigger : MonoBehaviour
 {
     public MonsterChaseAI monsterAI;
     [SerializeField] GameObject MonsterMesh;
+    [SerializeField] GameObject Monster;
+    [SerializeField] Transform SpawnLocation;
     [SerializeField] Collider MonsterCollider;
     [SerializeField] AudioSource AudioSource;
     [SerializeField] public AudioClip NormalMusic;
+    [SerializeField] GameObject WallToBeDistroied;
+    public bool endChase = true;
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            MonsterMesh.SetActive(false);
-            MonsterCollider.enabled = false;
-            AudioSource.clip = NormalMusic;  // Set the chase music
-            AudioSource.Play();  // Play chase music
-            AudioSource.loop = true;  // Make sure chase music loops
+            if (endChase)
+            {
+                MonsterMesh.SetActive(false);
+                MonsterCollider.enabled = false;
+            }
+            else
+            {
+                MonsterMesh.SetActive(false);
+                Monster.transform.position = SpawnLocation.position;
+                Monster.transform.rotation = SpawnLocation.rotation; // Match rotation if needed
+                MonsterMesh.SetActive(true);
+            }
+
+
+            if (AudioSource != null)
+            {
+                AudioSource.clip = NormalMusic;
+                AudioSource.Play();
+                AudioSource.loop = true;
+            }
+
             monsterAI.StartChase();
+            Collider wallCollider = WallToBeDistroied.GetComponent<Collider>();
+            Debug.Log("Collider enabled before: " + wallCollider.enabled);
+            wallCollider.enabled = false;
+            Debug.Log("Collider enabled after: " + wallCollider.enabled);
+            WallToBeDistroied.SetActive(false);
+            Debug.Log("Wall active after: " + WallToBeDistroied.activeSelf);
         }
     }
 }

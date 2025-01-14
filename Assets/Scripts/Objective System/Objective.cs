@@ -8,6 +8,16 @@ public class Objective : ScriptableObject
     public string description;
     public bool isCompleted;
 
+    private void OnDisable()
+    {
+        isCompleted = false;
+    }
+
+    private void OnEnable()
+    {
+        isCompleted = false;
+    }
+
     //public abstract void ActivateObjective();
     //public abstract void DeactivateObjective();
 
@@ -16,7 +26,6 @@ public class Objective : ScriptableObject
         isCompleted = true;
         ObjectiveEvents.ObjectiveCompleted(this); // Notify system that this objective is complete
     }
-
 
     public string objectiveEventName;
 
@@ -27,8 +36,6 @@ public class Objective : ScriptableObject
         Debug.Log("Objective started: " + description);
 
     }
-
-
 
     public void DeactivateObjective()
     {

@@ -22,9 +22,10 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (!isMoving && objectiveToComplete.isCompleted)
+        if (!isMoving)
         {
-            StartCoroutine(OpenDoors());
+            if (objectiveToComplete.isCompleted)
+                StartCoroutine(OpenDoors());
         }
     }
 
