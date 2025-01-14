@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdc367113c381a4e8d6f614722b77a5, type: 3}
   m_Name: CheckOutRoom_OBJ
   m_EditorClassIdentifier: 
-  description: Search the place for clues on what happened
-  isCompleted: 0
+  description: Search the place for clues.
+  isCompleted: 1
   objectiveEventName: OnCheckOutRoom

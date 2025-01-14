@@ -8,13 +8,37 @@ public class CameraSmoothing : MonoBehaviour
     [SerializeField] private Transform headAnchor; // The parent of the camera
     [SerializeField] private float smoothing = 0.2f;
 
+    bool canSmoothing=true;
+    Quaternion rotation;
+
     void LateUpdate()
     {
-        // Smoothly follow the head position
-       headAnchor.position = headTransform.position;
-       
-        // Match the head rotation but apply less bobbing
-        headAnchor.rotation = Quaternion.Lerp(headAnchor.rotation, headTransform.rotation, smoothing);
-      
+
+        if (canSmoothing)
+        {
+            print(canSmoothing + "can smooth");
+            // Smoothly follow the head position
+            headAnchor.position = headTransform.position;
+
+            // Match the head rotation but apply less bobbing
+            headAnchor.rotation = Quaternion.Lerp(headAnchor.rotation, headTransform.rotation, smoothing);
+        }
+        else
+        {
+            headAnchor.position = headTransform.position;
+                //new Vector3(headAnchor.position.x, headTransform.position.y, headAnchor.position.z);
+                // headAnchor.rotation = headTransform.rotation;
+
+
+        }
+    }
+
+    public void NoSmoothing()
+    {
+        rotation = transform.rotation;
+        canSmoothing = false;
+        print(canSmoothing + "no smooth");
+        
+        
     }
 }

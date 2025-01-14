@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SendMail_OBJ
   m_EditorClassIdentifier: 
   description: Send the mail to Tim
-  isCompleted: 0
+  isCompleted: 1
   objectiveEventName: OnEmailSent

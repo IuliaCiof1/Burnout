@@ -55,6 +55,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
     void StartState()
     {
         lastCameraRotation = Quaternion.identity;
+        
         phone.HidePhone();
         playerController.canMove = false;
         playerController.enabled = false;
@@ -87,6 +88,9 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
         playerController.canMove = false;
         playerController.enabled = false;
         lastCameraRotation = camera.gameObject.transform.localRotation;
+        camera.GetComponent<CameraSmoothing>().NoSmoothing();
+      
+        //camera.gameObject.transform.localRotation = lastCameraRotation;
         print(lastCameraRotation);
         phone.HidePhone();
        
@@ -168,6 +172,7 @@ public class MONITOR_Interactable : MonoBehaviour, IInteractable
              });
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        camera.GetComponent<CameraSmoothing>().enabled = true;
     }
 
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TakeLift_OBJ
   m_EditorClassIdentifier: 
   description: Get out!
-  isCompleted: 0
+  isCompleted: 1
   objectiveEventName: OnTakeLift
