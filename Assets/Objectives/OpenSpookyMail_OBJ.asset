@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: OpenSpookyMail_OBJ
   m_EditorClassIdentifier: 
   description: Open the new mail you received
-  isCompleted: 0
+  isCompleted: 1
   objectiveEventName: OnOpenSpookyMail

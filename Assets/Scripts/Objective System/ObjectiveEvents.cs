@@ -13,6 +13,8 @@ public static class ObjectiveEvents
     public static event Action OnOpenSpookyMail;
     public static event Action OnCheckOutRoom;
     public static event Action OnTakeLift;
+    public static event Action OnFindExit;
+    public static event Action OnFindEquipment;
 
 
 
@@ -22,7 +24,9 @@ public static class ObjectiveEvents
         { "OnEmailSent", OnEmailSent},
         { "OnOpenSpookyMail", OnOpenSpookyMail},
         {"OnCheckOutRoom", OnCheckOutRoom },
-        {"OnTakeLift", OnTakeLift }
+        {"OnTakeLift", OnTakeLift },
+        {"OnFindExit", OnFindExit},
+        {"OnFindEquipment", OnFindEquipment}
 
     };
 
@@ -91,5 +95,15 @@ public static class ObjectiveEvents
     public static void TakeLift()
     {
         TriggerEvent("OnTakeLift");
+    }
+
+    public static void FindExit()
+    {
+        TriggerEvent("OnFindExit");
+    }
+
+    public static void FindEquipment()
+    {
+        TriggerEvent("OnFindEquipment");
     }
 }
