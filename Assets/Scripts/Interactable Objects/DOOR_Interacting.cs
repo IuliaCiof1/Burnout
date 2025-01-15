@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DOOR_Interacting : MonoBehaviour, IInteractable
 {
-    private bool isOpen = false;
+    public bool isOpen = false;
     private bool isMoving = false;
     public bool isLocked = false;
     private Quaternion closedRotation;

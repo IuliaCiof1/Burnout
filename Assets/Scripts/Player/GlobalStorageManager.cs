@@ -13,6 +13,8 @@ public class GlobalStateManager : MonoBehaviour
         {
             CollectedKeys.Add(keyId);
         }
+
+    
     }
 
     public static bool HasKey(int keyId)

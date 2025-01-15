@@ -27,8 +27,12 @@ public class TELP_DOOR_interactable : MonoBehaviour, IInteractable
         }
         bool hasAllKeys = RequiredKeys.TrueForAll(key => GlobalStateManager.HasKey(key));
 
+
+
+
         if (hasAllKeys)
         {
+            ObjectiveEvents.FindEquipment();
             OpenAndTeleport();
         }
         else
