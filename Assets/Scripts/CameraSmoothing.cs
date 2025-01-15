@@ -16,8 +16,7 @@ public class CameraSmoothing : MonoBehaviour
 
         if (canSmoothing)
         {
-            print(canSmoothing + "can smooth");
-            // Smoothly follow the head position
+             // Smoothly follow the head position
             headAnchor.position = headTransform.position;
 
             // Match the head rotation but apply less bobbing
@@ -27,18 +26,12 @@ public class CameraSmoothing : MonoBehaviour
         {
             headAnchor.position = headTransform.position;
                 //new Vector3(headAnchor.position.x, headTransform.position.y, headAnchor.position.z);
-                // headAnchor.rotation = headTransform.rotation;
-
-
         }
     }
 
     public void NoSmoothing()
     {
         rotation = transform.rotation;
-        canSmoothing = false;
-        print(canSmoothing + "no smooth");
-        
-        
+        canSmoothing = false;    
     }
 }

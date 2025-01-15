@@ -39,7 +39,7 @@ public class ELEVATOR_interactable : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            ObjectiveEvents.TakeLift();
+            //ObjectiveEvents.TakeLift();
 
             playerInside = true;
             restrictingCollider.enabled = true;

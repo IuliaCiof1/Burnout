@@ -22,5 +22,7 @@ public class UVFLASH_interactable : MonoBehaviour, IInteractable
         //ObjectiveEvents.SendSpookyEmail();
         Destroy(gameObject);
         Debug.Log("You picked up a UVFLash");
+        GlobalStateManager.AddKey(0);
+ 
     }
 }

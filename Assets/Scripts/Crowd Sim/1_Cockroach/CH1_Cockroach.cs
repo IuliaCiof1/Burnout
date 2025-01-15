@@ -19,7 +19,7 @@ public class CH1_Cockroach : MonoBehaviour
     public Vector3 direction;
     private Collider cockroachCollider;
     public float speed = 0.4f;
-    public bool isDead;
+
     public bool isAggresive = false;
     private float changeDirectionTimer;
     private float randomChangeTime;
@@ -29,11 +29,6 @@ public class CH1_Cockroach : MonoBehaviour
     public float cohesionDistance = 10.0f;
     public float maxFlockSpeed = 0.4f;
     private float initialYPosition;
-
-    private Vector3 initialPosition;
-    public float maxDistance = 5.0f; // Maximum distance the cockroach can move from its initial position
-
-
     #endregion
 
     #region - Events
@@ -43,13 +38,11 @@ public class CH1_Cockroach : MonoBehaviour
         initialYPosition = transform.position.y;
         cockroachCollider = GetComponent<Collider>();
         ChangeState(new CH1_Moving());
-
-        initialPosition = transform.parent.position;
     }
 
     void Update()
     {
-        if (currentState is CH1_Dead || isDead) { ChangeState(new CH1_Dead());  return; }
+        if (currentState is CH1_Dead) return;
 
         currentState?.Update(this);
         changeDirectionTimer -= Time.deltaTime;
@@ -95,26 +88,9 @@ public class CH1_Cockroach : MonoBehaviour
         currentState.Enter(this);
     }
 
-   
-    public void WillStayWithinBounds()
-    {
-        // Calculate the potential new position
-        Vector3 futurePosition = transform.position + direction * speed * Time.deltaTime;
-
-        // Calculate bounds based on the initial position and maxDistance
-        Vector3 minBounds = initialPosition - new Vector3(maxDistance, 0, maxDistance);
-        Vector3 maxBounds = initialPosition + new Vector3(maxDistance, 0, maxDistance);
-
-        // Check if the future position is within the bounds
-        if (futurePosition.x >= minBounds.x && futurePosition.x <= maxBounds.x &&
-               futurePosition.z >= minBounds.z && futurePosition.z <= maxBounds.z)
-            direction = -direction;
-    }
-
     public void Move()
     {
-        //WillStayWithinBounds();
-            transform.position += direction * speed * Time.deltaTime;
+        transform.position += direction * speed * Time.deltaTime;
     }
 
     public bool IsPlayerNearby()
@@ -139,7 +115,7 @@ public class CH1_Cockroach : MonoBehaviour
             direction = (transform.position - player.transform.position).normalized;
         }
     }
-    
+
     public void ApplyFlockingBehavior()
     {
         Vector3 separation = Vector3.zero;
@@ -179,7 +155,7 @@ public class CH1_Cockroach : MonoBehaviour
         if (separationCount > 0)
         {
             separation /= separationCount;
-            separation = separation.normalized; 
+            separation = separation.normalized;
         }
 
         if (alignmentCount > 0)
@@ -204,7 +180,7 @@ public class CH1_Cockroach : MonoBehaviour
     }
     public void AvoidObstacles()
     {
-        float obstacleAvoidanceRange = 2.0f; 
+        float obstacleAvoidanceRange = 2.0f;
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, direction, out hit, obstacleAvoidanceRange))
@@ -212,7 +188,7 @@ public class CH1_Cockroach : MonoBehaviour
             if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
             {
                 Vector3 avoidDirection = Vector3.Reflect(direction, hit.normal);
-                direction = Vector3.Lerp(direction, avoidDirection.normalized, 0.5f); 
+                direction = Vector3.Lerp(direction, avoidDirection.normalized, 0.5f);
             }
         }
     }
@@ -269,7 +245,7 @@ public class CH1_Cockroach : MonoBehaviour
         CS1_Anim.SetTrigger("anim_Attacking");
     }
 
-    public void SetMovingVisual() 
+    public void SetMovingVisual()
     {
         CS1_Anim.SetTrigger("anim_Moving");
     }

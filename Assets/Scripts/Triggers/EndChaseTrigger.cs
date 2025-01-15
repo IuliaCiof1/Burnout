@@ -38,13 +38,8 @@ public class EndChaseTrigger : MonoBehaviour
                 AudioSource.loop = true;
             }
 
-            monsterAI.StartChase();
-            Collider wallCollider = WallToBeDistroied.GetComponent<Collider>();
-            Debug.Log("Collider enabled before: " + wallCollider.enabled);
-            wallCollider.enabled = false;
-            Debug.Log("Collider enabled after: " + wallCollider.enabled);
-            WallToBeDistroied.SetActive(false);
-            Debug.Log("Wall active after: " + WallToBeDistroied.activeSelf);
+            monsterAI.StopChase();
+ 
         }
     }
 }
