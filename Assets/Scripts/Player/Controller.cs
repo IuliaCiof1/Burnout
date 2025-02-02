@@ -137,7 +137,7 @@ public class Controller : MonoBehaviour
 
     void HandleCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Space))
         {
             bool isObstacleAbove = Physics.Raycast(
                 transform.position,
